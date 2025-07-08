@@ -1,11 +1,13 @@
 ﻿using APP.Interface;
 using Microsoft.AspNetCore.Mvc;
+using NetTopologySuite.Geometries;
+using NetTopologySuite.IO;
 using SimplePointApplication.Entity;
 
 namespace SimplePointApplication.Controllers
 {
-     [ApiController]
-    [Route("[controller]/[action]")] 
+    [ApiController]
+    [Route("[controller]/[action]")]
     public class PointController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -16,105 +18,140 @@ namespace SimplePointApplication.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] WktModel point)
+        public object Add([FromBody] WktModel model)
         {
             try
             {
-                _unitOfWork.genericRepository.Add(point);
+                var rawWkt = model.GetRawWkt();
+
+                if (string.IsNullOrWhiteSpace(rawWkt))
+                    return new { error = "WKT değeri boş olamaz." };
+
+                var reader = new WKTReader(new GeometryFactory(new PrecisionModel(), 4326));
+                Geometry geometry;
+                try
+                {
+                    geometry = reader.Read(rawWkt);
+                    geometry.SRID = 4326;
+                }
+                catch (ParseException ex)
+                {
+                    return new { error = $"Geometri hatalı: {ex.Message}" };
+                }
+
+                model.Geometry = geometry;
+
+                _unitOfWork.genericRepository.Add(model);
                 _unitOfWork.Commit();
-                return Ok(point);
+
+                return model;
             }
             catch (Exception ex)
             {
-                return BadRequest($"Error adding point: {ex.Message}");
+                return new { error = $"Genel hata: {ex.Message}" };
             }
         }
 
         [HttpPost("range")]
-        public IActionResult AddRange([FromBody] List<WktModel> points)
+        public object AddRange([FromBody] List<WktModel> points)
         {
             try
             {
                 _unitOfWork.genericRepository.AddRange(points);
                 _unitOfWork.Commit();
-                return Ok(points);
+                return points;
             }
             catch (Exception ex)
             {
-                return BadRequest($"Error adding points: {ex.Message}");
+                return new { error = $"Error adding points: {ex.Message}" };
             }
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public object GetAll()
         {
             try
             {
-                var points = _unitOfWork.genericRepository.GetAll();
-                return Ok(points);
+                return _unitOfWork.genericRepository.GetAll();
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error retrieving points: {ex.Message}");
+                return new { error = $"Error retrieving points: {ex.Message}" };
             }
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public object GetById(int id)
         {
             try
             {
                 var point = _unitOfWork.genericRepository.GetById(id);
-                if (point == null)
-                {
-                    return NotFound();
-                }
-                return Ok(point);
+                return point ;
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error retrieving point: {ex.Message}");
+                return new { error = $"Error retrieving point: {ex.Message}" };
             }
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] WktModel point)
+        public object Update(int id, [FromBody] WktModel point)
         {
             try
             {
                 if (id != point.Id)
+                    return new { error = "ID mismatch" };
+
+                var rawWkt = point.GetRawWkt();
+
+                if (string.IsNullOrWhiteSpace(rawWkt))
+                    return new { error = "WKT değeri boş olamaz." };
+
+                var reader = new WKTReader(new GeometryFactory(new PrecisionModel(), 4326));
+                Geometry geometry;
+
+                try
                 {
-                    return BadRequest("ID mismatch");
+                    geometry = reader.Read(rawWkt);
+                    geometry.SRID = 4326;
                 }
+                catch (ParseException ex)
+                {
+                    return new { error = $"Geometri hatalı: {ex.Message}" };
+                }
+
+                point.Geometry = geometry;
 
                 _unitOfWork.genericRepository.updateById(point);
                 _unitOfWork.Commit();
-                return Ok(point);
+
+                return point;
             }
             catch (Exception ex)
             {
-                return BadRequest($"Error updating point: {ex.Message}");
+                return new { error = $"Error updating point: {ex.Message}" };
             }
         }
 
+
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public object Delete(int id)
         {
             try
             {
                 var point = _unitOfWork.genericRepository.GetById(id);
                 if (point == null)
                 {
-                    return NotFound();
+                    return new { error = "Point not found." };
                 }
 
                 _unitOfWork.genericRepository.deleteById(id);
                 _unitOfWork.Commit();
-                return NoContent();
+                return new { message = "Silme işlemi başarılı." };
             }
             catch (Exception ex)
             {
-                return BadRequest($"Error deleting point: {ex.Message}");
+                return new { error = $"Error deleting point: {ex.Message}" };
             }
         }
     }

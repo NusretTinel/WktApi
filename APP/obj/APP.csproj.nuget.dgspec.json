@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\CASPER\\source\\repos\\APP\\APP.csproj": {}
+    "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\APP.csproj": {}
   },
   "projects": {
-    "C:\\Users\\CASPER\\source\\repos\\APP\\APP.csproj": {
+    "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\APP.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\CASPER\\source\\repos\\APP\\APP.csproj",
+        "projectUniqueName": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\APP.csproj",
         "projectName": "APP",
-        "projectPath": "C:\\Users\\CASPER\\source\\repos\\APP\\APP.csproj",
+        "projectPath": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\APP.csproj",
         "packagesPath": "C:\\Users\\CASPER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\CASPER\\source\\repos\\APP\\obj\\",
+        "outputPath": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

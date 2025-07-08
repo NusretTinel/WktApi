@@ -11,22 +11,19 @@ namespace SimplePointApplication.Entity
     {
         public int Id { get; set; }
         public string? Name { get; set; }
-
+        private string? _wkt;
         [JsonIgnore]
-        public Geometry Geometry { get; set; } = null!;
+        public Geometry? Geometry { get; set; }
 
         [NotMapped]
-        public string Wkt
+       
+        public string? Wkt
         {
-            get => Geometry != null ? Geometry.AsText() : "";
-            set
-            {
-                if (!string.IsNullOrWhiteSpace(value))
-                {
-                    var reader = new WKTReader();
-                    Geometry = reader.Read(value);
-                }
-            }
+            get => Geometry?.AsText();  // GET: veritabanındaki geometriyi döner
+            set => _wkt = value;        // SET: gelen veriyi geçici olarak saklar
         }
+
+        public string? GetRawWkt() => _wkt;
     }
 }
+

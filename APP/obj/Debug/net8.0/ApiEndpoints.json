@@ -8,7 +8,7 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "point",
+        "Name": "model",
         "Type": "SimplePointApplication.Entity.WktModel",
         "IsRequired": true
       }

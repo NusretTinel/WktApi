@@ -11,7 +11,7 @@ public class AppDbContext : DbContext
     {
         mb.Entity<WktModel>(e =>
         {
-            e.Property(p => p.Geometry).HasColumnType("geometry(Point,4326)");
+            e.Property(p => p.Geometry).HasColumnType("geometry");
 
             
         });
