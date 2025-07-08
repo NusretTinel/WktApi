@@ -1,0 +1,97 @@
+[
+  {
+    "ContainingType": "SimplePointApplication.Controllers.PointController",
+    "Method": "Add",
+    "RelativePath": "Point/Add",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "point",
+        "Type": "SimplePointApplication.Entity.WktModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SimplePointApplication.Controllers.PointController",
+    "Method": "AddRange",
+    "RelativePath": "Point/AddRange/range",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "points",
+        "Type": "System.Collections.Generic.List\u00601[[SimplePointApplication.Entity.WktModel, APP, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SimplePointApplication.Controllers.PointController",
+    "Method": "Delete",
+    "RelativePath": "Point/Delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SimplePointApplication.Controllers.PointController",
+    "Method": "GetAll",
+    "RelativePath": "Point/GetAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SimplePointApplication.Controllers.PointController",
+    "Method": "GetById",
+    "RelativePath": "Point/GetById/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SimplePointApplication.Controllers.PointController",
+    "Method": "Update",
+    "RelativePath": "Point/Update/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "point",
+        "Type": "SimplePointApplication.Entity.WktModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
