@@ -3,24 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\controllers\\controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:controllers\\controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\controllers\\pointcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:controllers\\pointcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\calculationmodule\\optimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:calculationmodule\\optimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\calculationmodule\\trashbinoptimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:calculationmodule\\trashbinoptimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\calculationmodule\\optimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:calculationmodule\\optimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\controllers\\controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:controllers\\controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -39,66 +31,41 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "pointController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Controllers\\pointController.cs",
-              "RelativeDocumentMoniker": "Controllers\\pointController.cs",
-              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Controllers\\pointController.cs",
-              "RelativeToolTip": "Controllers\\pointController.cs",
-              "ViewState": "AgIAAEIAAAAAAAAAAAAAAEoAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-17T08:24:50.263Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "TrashBinOptimizer.cs",
               "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\CalculationModule\\TrashBinOptimizer.cs",
               "RelativeDocumentMoniker": "CalculationModule\\TrashBinOptimizer.cs",
               "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\CalculationModule\\TrashBinOptimizer.cs",
               "RelativeToolTip": "CalculationModule\\TrashBinOptimizer.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAAwCMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAADYAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-17T08:15:16.503Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "Optimizer.cs",
               "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\CalculationModule\\Optimizer.cs",
               "RelativeDocumentMoniker": "CalculationModule\\Optimizer.cs",
               "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\CalculationModule\\Optimizer.cs",
               "RelativeToolTip": "CalculationModule\\Optimizer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAF8AAAAAAAAAAAAAwGoAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-17T08:15:16.174Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Controller.cs",
               "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Controllers\\Controller.cs",
               "RelativeDocumentMoniker": "Controllers\\Controller.cs",
-              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Controllers\\Controller.cs*",
-              "RelativeToolTip": "Controllers\\Controller.cs*",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAABQAAAA+AAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Controllers\\Controller.cs",
+              "RelativeToolTip": "Controllers\\Controller.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAoAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-17T08:35:11.118Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-07-08T08:29:03.533Z"
             }
           ]
         }

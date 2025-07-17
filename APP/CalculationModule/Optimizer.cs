@@ -42,7 +42,7 @@ namespace SimplePointApplication.Tools
                 double maxVal = 0;
                 int maxX = 0, maxY = 0;
 
-                // Find the next highest peak
+                
                 for (int x = 0; x < map.GetLength(0); x++)
                 {
                     for (int y = 0; y < map.GetLength(1); y++)
@@ -63,14 +63,13 @@ namespace SimplePointApplication.Tools
                     break;
                 }
 
-                // Add the peak
                 var point = new Point(
                     maxX * cellSize + cellSize / 2,
                     maxY * cellSize + cellSize / 2);
                 peaks.Add(point);
                 Console.WriteLine($"Added peak {i + 1}: {point}");
 
-                // Suppress nearby values
+               
                 for (int x = Math.Max(0, maxX - minDistInCells);
                      x <= Math.Min(map.GetLength(0) - 1, maxX + minDistInCells); x++)
                 {

@@ -23,7 +23,7 @@ namespace SimplePointApplication.Optimizers
                 foreach (var model in models)
                 {
                     if (string.IsNullOrWhiteSpace(model.Wkt))
-                        continue; // Skip null/empty WKT
+                        continue;
 
                     try
                     {
@@ -33,7 +33,7 @@ namespace SimplePointApplication.Optimizers
                     }
                     catch
                     {
-                        continue; // Skip invalid WKT
+                        continue; 
                     }
                 }
                 return points;
@@ -43,8 +43,8 @@ namespace SimplePointApplication.Optimizers
             {
                 return points.Select(p => new WktModel
                 {
-                    Geometry = p, // Set Geometry directly (Wkt will be computed automatically)
-                    Name = "Optimized Bin" // Optional: Set a default name
+                    Geometry = p, 
+                    Name = "Optimized Bin" 
                 }).ToList();
             }
         }
