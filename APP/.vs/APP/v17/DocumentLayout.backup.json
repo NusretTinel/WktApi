@@ -1,62 +1,50 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\",
+  "WorkspaceRootPath": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\casper\\desktop\\wktapi\\app\\controllers\\pointcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:controllers\\pointcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\casper\\desktop\\wktapi\\app\\entity\\wktmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:entity\\wktmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\casper\\desktop\\wktapi\\app\\dbcontext\\dbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:dbcontext\\dbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\casper\\desktop\\wktapi\\app\\dto\\dto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:dto\\dto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\casper\\desktop\\wktapi\\app\\interface\\ientity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:interface\\ientity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\casper\\desktop\\wktapi\\app\\interface\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:interface\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\casper\\desktop\\wktapi\\app\\interface\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:interface\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\casper\\desktop\\wktapi\\app\\repository\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\repository\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:repository\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\casper\\desktop\\wktapi\\app\\response\\response.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\response\\response.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:response\\response.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\casper\\desktop\\wktapi\\app\\service\\cwtefservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:service\\cwtefservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\casper\\desktop\\wktapi\\app\\un\u0131tofwork\\un\u0131tofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\un\u0131tofwork\\un\u0131tofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:un\u0131tofwork\\un\u0131tofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\casper\\desktop\\wktapi\\app\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\casper\\desktop\\wktapi\\app\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\entity\\wktmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:entity\\wktmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\casper\\desktop\\wktapi\\app\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\dbcontext\\dbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:dbcontext\\dbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\dto\\dto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:dto\\dto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\interface\\ientity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:interface\\ientity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\interface\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:interface\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\service\\cwtefservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:service\\cwtefservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -66,7 +54,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -74,50 +62,23 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "pointController.cs",
-              "DocumentMoniker": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Controllers\\pointController.cs",
-              "RelativeDocumentMoniker": "Controllers\\pointController.cs",
-              "ToolTip": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Controllers\\pointController.cs",
-              "RelativeToolTip": "Controllers\\pointController.cs",
-              "ViewState": "AgIAAFcAAAAAAAAAAAAAAHEAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-08T20:27:44.308Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "IEntity.cs",
-              "DocumentMoniker": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Interface\\IEntity.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Interface\\IEntity.cs",
               "RelativeDocumentMoniker": "Interface\\IEntity.cs",
-              "ToolTip": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Interface\\IEntity.cs",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Interface\\IEntity.cs",
               "RelativeToolTip": "Interface\\IEntity.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-08T20:19:28.367Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-08T20:19:28.367Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "IUnitOfWork.cs",
-              "DocumentMoniker": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Interface\\IUnitOfWork.cs",
-              "RelativeDocumentMoniker": "Interface\\IUnitOfWork.cs",
-              "ToolTip": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Interface\\IUnitOfWork.cs",
-              "RelativeToolTip": "Interface\\IUnitOfWork.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-08T20:19:23.238Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 1,
               "Title": "Response.cs",
-              "DocumentMoniker": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Response\\Response.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Response\\Response.cs",
               "RelativeDocumentMoniker": "Response\\Response.cs",
-              "ToolTip": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Response\\Response.cs",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Response\\Response.cs",
               "RelativeToolTip": "Response\\Response.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -126,90 +87,75 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 2,
               "Title": "Un\u0131tOfWork.cs",
-              "DocumentMoniker": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Un\u0131tOfWork\\Un\u0131tOfWork.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Un\u0131tOfWork\\Un\u0131tOfWork.cs",
               "RelativeDocumentMoniker": "Un\u0131tOfWork\\Un\u0131tOfWork.cs",
-              "ToolTip": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Un\u0131tOfWork\\Un\u0131tOfWork.cs",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Un\u0131tOfWork\\Un\u0131tOfWork.cs",
               "RelativeToolTip": "Un\u0131tOfWork\\Un\u0131tOfWork.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAswB4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-08T20:18:37.812Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "WeatherForecast.cs",
-              "DocumentMoniker": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\WeatherForecast.cs",
-              "RelativeDocumentMoniker": "WeatherForecast.cs",
-              "ToolTip": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\WeatherForecast.cs",
-              "RelativeToolTip": "WeatherForecast.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-08T12:44:15.253Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "WktModel.cs",
-              "DocumentMoniker": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Entity\\WktModel.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Entity\\WktModel.cs",
               "RelativeDocumentMoniker": "Entity\\WktModel.cs",
-              "ToolTip": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Entity\\WktModel.cs",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Entity\\WktModel.cs",
               "RelativeToolTip": "Entity\\WktModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-08T10:18:52.814Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-08T10:18:52.814Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Program.cs",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAA/AAAAAAAAAA==",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAABAAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-08T08:25:14.867Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "dbContext.cs",
-              "DocumentMoniker": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\DbContext\\dbContext.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\DbContext\\dbContext.cs",
               "RelativeDocumentMoniker": "DbContext\\dbContext.cs",
-              "ToolTip": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\DbContext\\dbContext.cs",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\DbContext\\dbContext.cs",
               "RelativeToolTip": "DbContext\\dbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-08T08:22:22.164Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-08T08:22:22.164Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "dto.cs",
-              "DocumentMoniker": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Dto\\dto.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Dto\\dto.cs",
               "RelativeDocumentMoniker": "Dto\\dto.cs",
-              "ToolTip": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Dto\\dto.cs",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Dto\\dto.cs",
               "RelativeToolTip": "Dto\\dto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-08T08:18:34.245Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-08T08:18:34.245Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 0,
               "Title": "GenericRepository.cs",
-              "DocumentMoniker": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Repository\\GenericRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Repository\\GenericRepository.cs",
               "RelativeDocumentMoniker": "Repository\\GenericRepository.cs",
-              "ToolTip": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Repository\\GenericRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Repository\\GenericRepository.cs",
               "RelativeToolTip": "Repository\\GenericRepository.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAoAAAAlAAAAAAAAAA==",
+              "ViewState": "AgIAACsAAAAAAAAAAADwvz8AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-08T08:26:35.907Z",
               "EditorCaption": ""
@@ -218,40 +164,37 @@
               "$type": "Document",
               "DocumentIndex": 9,
               "Title": "CwtEfService.cs",
-              "DocumentMoniker": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Service\\CwtEfService.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Service\\CwtEfService.cs",
               "RelativeDocumentMoniker": "Service\\CwtEfService.cs",
-              "ToolTip": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Service\\CwtEfService.cs",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Service\\CwtEfService.cs",
               "RelativeToolTip": "Service\\CwtEfService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-08T08:50:13.615Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-08T08:50:13.615Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "IGenericRepository.cs",
-              "DocumentMoniker": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Interface\\IGenericRepository.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Interface\\IGenericRepository.cs",
               "RelativeDocumentMoniker": "Interface\\IGenericRepository.cs",
-              "ToolTip": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\Interface\\IGenericRepository.cs",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Interface\\IGenericRepository.cs",
               "RelativeToolTip": "Interface\\IGenericRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-08T08:32:49.433Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-08T08:32:49.433Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 10,
               "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\appsettings.json",
+              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\CASPER\\Desktop\\WktApi\\APP\\appsettings.json",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\appsettings.json",
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-07-08T08:29:03.533Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-08T08:29:03.533Z"
             }
           ]
         }

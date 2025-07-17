@@ -1,5 +1,31 @@
 [
   {
+    "ContainingType": "SimplePointApplication.Controllers.TrashBinController",
+    "Method": "OptimizeTrashBins",
+    "RelativePath": "optimize",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "SimplePointApplication.Controllers.TrashBinController\u002BOptimizationRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[SimplePointApplication.Entity.WktModel, APP, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "SimplePointApplication.Controllers.PointController",
     "Method": "Add",
     "RelativePath": "Point/Add",
