@@ -2,15 +2,30 @@
   {
     "ContainingType": "SimplePointApplication.Controllers.TrashBinController",
     "Method": "OptimizeTrashBins",
-    "RelativePath": "optimize",
+    "RelativePath": "api/TrashBin/optimize",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "request",
-        "Type": "SimplePointApplication.Controllers.TrashBinController\u002BOptimizationRequest",
+        "Name": "populationHeatmap",
+        "Type": "System.Double[][]",
         "IsRequired": true
+      },
+      {
+        "Name": "cellSize",
+        "Type": "System.Double",
+        "IsRequired": false
+      },
+      {
+        "Name": "newBinCount",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "minDistance",
+        "Type": "System.Double",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [

@@ -176,26 +176,80 @@
         }
       }
     },
-    "/optimize": {
+    "/api/TrashBin/optimize": {
       "post": {
         "tags": [
           "TrashBin"
+        ],
+        "parameters": [
+          {
+            "name": "cellSize",
+            "in": "query",
+            "schema": {
+              "minimum": 0.1,
+              "type": "number",
+              "format": "double",
+              "default": 1
+            }
+          },
+          {
+            "name": "newBinCount",
+            "in": "query",
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 5
+            }
+          },
+          {
+            "name": "minDistance",
+            "in": "query",
+            "schema": {
+              "minimum": 0,
+              "type": "number",
+              "format": "double",
+              "default": 0
+            }
+          }
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/OptimizationRequest"
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "format": "double"
+                  }
+                }
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/OptimizationRequest"
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "format": "double"
+                  }
+                }
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/OptimizationRequest"
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "format": "double"
+                  }
+                }
               }
             }
           }
@@ -236,61 +290,6 @@
   },
   "components": {
     "schemas": {
-      "OptimizationRequest": {
-        "required": [
-          "cellSize",
-          "existingBins",
-          "minDistance",
-          "newBinCount",
-          "populationHeatmap"
-        ],
-        "type": "object",
-        "properties": {
-          "existingBins": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TrashBinInputDto"
-            }
-          },
-          "populationHeatmap": {
-            "type": "array",
-            "items": {
-              "type": "array",
-              "items": {
-                "type": "number",
-                "format": "double"
-              }
-            }
-          },
-          "cellSize": {
-            "minimum": 0.1,
-            "type": "number",
-            "format": "double"
-          },
-          "newBinCount": {
-            "maximum": 2147483647,
-            "minimum": 1,
-            "type": "integer",
-            "format": "int32"
-          },
-          "minDistance": {
-            "minimum": 0.1,
-            "type": "number",
-            "format": "double"
-          }
-        },
-        "additionalProperties": false
-      },
-      "TrashBinInputDto": {
-        "type": "object",
-        "properties": {
-          "wkt": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "WktModel": {
         "type": "object",
         "properties": {
