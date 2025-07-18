@@ -55,10 +55,21 @@ namespace SimplePointApplication.Optimizers
             _optimizer = new Optimizer();
         }
 
-        public List<WktModel> OptimizeTrashBins(double[] [] populationHeatmap, double cellSize, int newBinCount, double minDistance)
+        public List<WktModel> OptimizeTrashBins(
+       double[][] populationHeatmap,
+       double cellSize,
+       int newBinCount,
+       double minDistance,
+       Polygon polygon = null) 
         {
             var existingBins = WKTProcessor.ParseWKTToPoints(_trashBins);
-            var optimizedBins = _optimizer.Optimize(populationHeatmap, existingBins, cellSize, newBinCount, minDistance);
+            var optimizedBins = _optimizer.Optimize(
+                populationHeatmap,
+                existingBins,
+                cellSize,
+                newBinCount,
+                minDistance,
+                polygon);  
             return WKTProcessor.ConvertPointsToWKTModels(optimizedBins);
         }
     }
