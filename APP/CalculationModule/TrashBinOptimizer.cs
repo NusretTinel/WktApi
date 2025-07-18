@@ -23,7 +23,7 @@ namespace SimplePointApplication.Optimizers
                 foreach (var model in models)
                 {
                     if (string.IsNullOrWhiteSpace(model.Wkt))
-                        continue; // Skip null/empty WKT
+                        continue;
 
                     try
                     {
@@ -33,7 +33,7 @@ namespace SimplePointApplication.Optimizers
                     }
                     catch
                     {
-                        continue; // Skip invalid WKT
+                        continue; 
                     }
                 }
                 return points;
@@ -43,8 +43,8 @@ namespace SimplePointApplication.Optimizers
             {
                 return points.Select(p => new WktModel
                 {
-                    Geometry = p, // Set Geometry directly (Wkt will be computed automatically)
-                    Name = "Optimized Bin" // Optional: Set a default name
+                    Geometry = p, 
+                    Name = "Optimized Bin" 
                 }).ToList();
             }
         }
@@ -55,10 +55,21 @@ namespace SimplePointApplication.Optimizers
             _optimizer = new Optimizer();
         }
 
-        public List<WktModel> OptimizeTrashBins(double[] [] populationHeatmap, double cellSize, int newBinCount, double minDistance)
+        public List<WktModel> OptimizeTrashBins(
+       double[][] populationHeatmap,
+       double cellSize,
+       int newBinCount,
+       double minDistance,
+       Polygon polygon = null) 
         {
             var existingBins = WKTProcessor.ParseWKTToPoints(_trashBins);
-            var optimizedBins = _optimizer.Optimize(populationHeatmap, existingBins, cellSize, newBinCount, minDistance);
+            var optimizedBins = _optimizer.Optimize(
+                populationHeatmap,
+                existingBins,
+                cellSize,
+                newBinCount,
+                minDistance,
+                polygon);  
             return WKTProcessor.ConvertPointsToWKTModels(optimizedBins);
         }
     }

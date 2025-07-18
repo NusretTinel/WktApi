@@ -8,11 +8,6 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "populationHeatmap",
-        "Type": "System.Double[][]",
-        "IsRequired": true
-      },
-      {
         "Name": "cellSize",
         "Type": "System.Double",
         "IsRequired": false
@@ -26,19 +21,14 @@
         "Name": "minDistance",
         "Type": "System.Double",
         "IsRequired": false
+      },
+      {
+        "Name": "polygonWkt",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Collections.Generic.List\u00601[[SimplePointApplication.Entity.WktModel, APP, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "SimplePointApplication.Controllers.PointController",
