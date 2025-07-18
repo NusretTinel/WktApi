@@ -36,9 +36,10 @@
               "RelativeDocumentMoniker": "CalculationModule\\TrashBinOptimizer.cs",
               "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\CalculationModule\\TrashBinOptimizer.cs",
               "RelativeToolTip": "CalculationModule\\TrashBinOptimizer.cs",
-              "ViewState": "AgIAADQAAAAAAAAAAAAAAEcAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAADYAAAAAAAAAAAAAAEsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-17T08:15:16.503Z"
+              "WhenOpened": "2025-07-17T08:15:16.503Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -48,9 +49,10 @@
               "RelativeDocumentMoniker": "CalculationModule\\Optimizer.cs",
               "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\CalculationModule\\Optimizer.cs",
               "RelativeToolTip": "CalculationModule\\Optimizer.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAAAC0AAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAHoAAAAAAAAAAAAAAIAAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-17T08:15:16.174Z"
+              "WhenOpened": "2025-07-17T08:15:16.174Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -60,7 +62,7 @@
               "RelativeDocumentMoniker": "Controllers\\Controller.cs",
               "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Controllers\\Controller.cs",
               "RelativeToolTip": "Controllers\\Controller.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAAAB0AAABpAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-17T08:35:11.118Z",
               "EditorCaption": ""

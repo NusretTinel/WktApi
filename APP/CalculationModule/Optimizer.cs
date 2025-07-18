@@ -43,7 +43,7 @@ namespace SimplePointApplication.Tools
                 double maxVal = 0;
                 int maxX = 0, maxY = 0;
 
-            
+
                 for (int x = 0; x < map.GetLength(0); x++)
                 {
                     for (int y = 0; y < map.GetLength(1); y++)
@@ -54,7 +54,7 @@ namespace SimplePointApplication.Tools
                                 x * cellSize + cellSize / 2,
                                 y * cellSize + cellSize / 2);
 
-                            
+
                             if (polygon != null && !polygon.Contains(point))
                                 continue;
 
@@ -73,7 +73,7 @@ namespace SimplePointApplication.Tools
                     maxY * cellSize + cellSize / 2);
                 peaks.Add(peakPoint);
 
-                
+
                 for (int x = Math.Max(0, maxX - minDistInCells);
                      x <= Math.Min(map.GetLength(0) - 1, maxX + minDistInCells); x++)
                 {
@@ -126,10 +126,78 @@ namespace SimplePointApplication.Tools
             }
         }
 
-        public List<Point> Optimize(double[][] population, List<Point> existingBins, double cellSize, int binCount, double minDistance, Polygon polygon = null)
+        public List<Point> Optimize(double[][] population, List<Point> existingBins,
+                          double cellSize, int binCount, double minDistance,
+                          Polygon polygon = null)
         {
-            var differenceMap = CalculateDifferenceMap(population, existingBins, cellSize);
-            return FindPeaks(differenceMap, cellSize, binCount, minDistance, polygon);
+            var allBins = new HashSet<Point>(existingBins, new PointComparer());
+            var newBins = new List<Point>();
+
+            for (int i = 0; i < binCount; i++)
+            {
+                var differenceMap = CalculateDifferenceMap(population, allBins.ToList(), cellSize);
+                var candidates = FindPeaks(differenceMap, cellSize, 3, minDistance, polygon);
+
+                Point? bestCandidate = null;
+                foreach (var candidate in candidates)
+                {
+                    bool isDuplicate = allBins.Any(b =>
+                        Math.Abs(b.X - candidate.X) < 0.0001 &&
+                        Math.Abs(b.Y - candidate.Y) < 0.0001);
+
+                    
+                    bool isValid = !allBins.Any(b => b.Distance(candidate) < minDistance);
+
+                    if (!isDuplicate && isValid)
+                    {
+                        bestCandidate = candidate;
+                        break;
+                    }
+                }
+
+                if (bestCandidate == null) break;
+
+                newBins.Add(bestCandidate);
+                allBins.Add(bestCandidate);
+
+                
+                ZeroOutArea(differenceMap, bestCandidate, cellSize, minDistance);
+            }
+
+            return newBins;
+        }
+
+        private void ZeroOutArea(double[,] map, Point center, double cellSize, double radius)
+        {
+            int centerX = (int)(center.X / cellSize);
+            int centerY = (int)(center.Y / cellSize);
+            int radiusInCells = (int)(radius / cellSize) + 1;
+
+            for (int x = Math.Max(0, centerX - radiusInCells);
+                 x <= Math.Min(map.GetLength(0) - 1, centerX + radiusInCells); x++)
+            {
+                for (int y = Math.Max(0, centerY - radiusInCells);
+                     y <= Math.Min(map.GetLength(1) - 1, centerY + radiusInCells); y++)
+                {
+                    var point = new Point(x * cellSize + cellSize / 2, y * cellSize + cellSize / 2);
+                    if (center.Distance(point) <= radius)
+                    {
+                        map[x, y] = 0;
+                    }
+                }
+            }
+        }
+
+        
+        public class PointComparer : IEqualityComparer<Point>
+        {
+            public bool Equals(Point a, Point b) =>
+                Math.Abs(a.X - b.X) < 0.0001 &&
+                Math.Abs(a.Y - b.Y) < 0.0001;
+
+            public int GetHashCode(Point p) =>
+                (Math.Round(p.X, 4).GetHashCode() * 397) ^
+                Math.Round(p.Y, 4).GetHashCode();
         }
     }
 }
