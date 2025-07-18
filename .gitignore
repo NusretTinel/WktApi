@@ -1,1 +1,15 @@
 appsettings.json
+# Build output
+bin/
+obj/
+
+# User-specific files
+.vs/
+
+# Others
+*.user
+*.suo
+*.vsidx
+*.cache
+*.sqlite
+*.editorconfig
