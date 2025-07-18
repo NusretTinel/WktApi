@@ -102,8 +102,8 @@ namespace SimplePointApplication.Controllers
                     polygon);  
 
               
-                _unitOfWork.genericRepository.AddRange(result);
-                _unitOfWork.Commit();
+               /* _unitOfWork.genericRepository.AddRange(result);
+                _unitOfWork.Commit();*/
 
                 return Ok(result);
             }
