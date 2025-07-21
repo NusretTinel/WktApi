@@ -295,10 +295,7 @@ C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\runtimes\win-
 C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\runtimes\win-x64\native\opencv_videoio_ffmpeg4110_64.dll
 C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\runtimes\win-x86\native\OpenCvSharpExtern.dll
 C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\runtimes\win-x86\native\opencv_videoio_ffmpeg4110.dll
-C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\heatmap_1000x1000.json
-C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\gdal_csharp.dll
-C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\gdalconst_csharp.dll
-C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\ogr_csharp.dll
-C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\osr_csharp.dll
 C:\Users\USER\source\repos\NusretTinel\WktApi\APP\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
-C:\Users\USER\source\repos\NusretTinel\WktApi\APP\obj\Debug\net8.0\NuGet\4FDBA598CD19E19A922D0ABB3BCBB53EB60F2D99\GDAL\3.11.3\GdalConfiguration.cs
+C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\System.Drawing.Common.dll
+C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\runtimes\win\lib\net8.0\Microsoft.Win32.SystemEvents.dll

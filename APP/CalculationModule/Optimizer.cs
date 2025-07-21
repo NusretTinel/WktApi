@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
-using OSGeo.GDAL;
 using OpenCvSharp;
 using Point = NetTopologySuite.Geometries.Point;
 
@@ -13,129 +15,97 @@ namespace SimplePointApplication.Tools
     {
         private class PopulationDataSource : IDisposable
         {
-            private Dataset _dataset;
+            private readonly Bitmap _image;
             private readonly AffineTransform _transform;
             private readonly int _noDataValue = -200;
-            private DataWindow window;
 
             public PopulationDataSource(string path)
             {
-                Gdal.AllRegister();
-                _dataset = Gdal.Open(path, Access.GA_ReadOnly); double[] transform = new double[6];
-                _dataset.GetGeoTransform(transform);
-                _transform = new AffineTransform(transform);
+                try
+                {
+                    // Load with explicit validation
+                    using var fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+                    _image = (Bitmap)Image.FromStream(fs);
+
+                    // Default transform (override with your actual georeferencing)
+                    _transform = new AffineTransform(new double[] { 0, 1, 0, 0, 0, 1 });
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to load population map: {ex.Message}");
+                }
             }
 
             public double[,] GetPopulationDataForArea(int width, int height, Polygon bounds)
             {
-                window = CalculateDataWindow(bounds);
-                float[] buffer = new float[window.Width * window.Height];
-                _dataset.GetRasterBand(1).ReadRaster(
-                    window.X, window.Y,
-                    window.Width, window.Height,
-                    buffer,
-                    window.Width, window.Height,
-                    0, 0);
+                if (bounds == null || bounds.IsEmpty)
+                    throw new ArgumentException("Invalid polygon bounds");
 
-                return ProcessWindowData(buffer, window.Width, window.Height, width, height, bounds);
-            }
-
-            private DataWindow CalculateDataWindow(Polygon bounds)
-            {
+                var heatmap = new double[width, height];
                 var env = bounds.EnvelopeInternal;
-                _transform.GeoToPixel(env.MinX, env.MinY, out int x1, out int y1);
-                _transform.GeoToPixel(env.MaxX, env.MaxY, out int x2, out int y2);
 
-                return new DataWindow
+                try
                 {
-                    X = Math.Min(x1, x2),
-                    Y = Math.Min(y1, y2),
-                    Width = Math.Abs(x2 - x1) + 1,
-                    Height = Math.Abs(y2 - y1) + 1
-                };
-            }
+                    var bitmapData = _image.LockBits(
+                        new Rectangle(0, 0, _image.Width, _image.Height),
+                        ImageLockMode.ReadOnly,
+                        PixelFormat.Format32bppArgb);
 
-            private double[,] ProcessWindowData(float[] sourceData, int srcWidth, int srcHeight,
-                                             int targetWidth, int targetHeight, Polygon bounds)
-            {
-                var heatmap = new double[targetWidth, targetHeight];
-                double xRatio = (double)srcWidth / targetWidth;
-                double yRatio = (double)srcHeight / targetHeight;
-
-                for (int x = 0; x < targetWidth; x++)
-                {
-                    for (int y = 0; y < targetHeight; y++)
+                    unsafe
                     {
-                        double geoX, geoY;
-                        _transform.PixelToGeo(
-                            x * xRatio + window.X,
-                            y * yRatio + window.Y,
-                            out geoX, out geoY);
+                        byte* ptr = (byte*)bitmapData.Scan0;
+                        int stride = bitmapData.Stride;
 
-                        if (bounds.Contains(new Point(geoX, geoY)))
+                        for (int x = 0; x < width; x++)
                         {
-                            double srcX = x * xRatio;
-                            double srcY = y * yRatio;
+                            for (int y = 0; y < height; y++)
+                            {
+                                double geoX = env.MinX + (env.MaxX - env.MinX) * x / width;
+                                double geoY = env.MinY + (env.MaxY - env.MinY) * y / height;
 
-                            int x0 = (int)Math.Floor(srcX);
-                            int x1 = Math.Min(x0 + 1, srcWidth - 1);
-                            int y0 = (int)Math.Floor(srcY);
-                            int y1 = Math.Min(y0 + 1, srcHeight - 1);
+                                var point = new Point(geoX, geoY);
+                                if (bounds.Contains(point))
+                                {
+                                    _transform.GeoToPixel(geoX, geoY, out int pixelX, out int pixelY);
 
-                            double val = Interpolate(
-                                sourceData[y0 * srcWidth + x0],
-                                sourceData[y0 * srcWidth + x1],
-                                sourceData[y1 * srcWidth + x0],
-                                sourceData[y1 * srcWidth + x1],
-                                srcX - x0, srcY - y0);
-
-                            heatmap[x, y] = val > _noDataValue ? val : 0;
+                                    if (pixelX >= 0 && pixelX < _image.Width &&
+                                        pixelY >= 0 && pixelY < _image.Height)
+                                    {
+                                        byte* row = ptr + (pixelY * stride);
+                                        int r = row[pixelX * 4 + 2]; // Red channel
+                                        heatmap[x, y] = r == 0 ? 0 : r; // Treat 0 as NODATA
+                                    }
+                                }
+                            }
                         }
                     }
+                    _image.UnlockBits(bitmapData);
                 }
-                return heatmap;
-            }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to process population data: {ex.Message}");
+                }
 
-            private double Interpolate(double q11, double q21, double q12, double q22, double x, double y)
-            {
-                double r1 = q11 * (1 - x) + q21 * x;
-                double r2 = q12 * (1 - x) + q22 * x;
-                return r1 * (1 - y) + r2 * y;
+                return heatmap;
             }
 
             public void Dispose()
             {
-                _dataset?.Dispose();
+                _image?.Dispose();
+                GC.SuppressFinalize(this);
             }
-        }
-
-        private class DataWindow
-        {
-            public int X { get; set; }
-            public int Y { get; set; }
-            public int Width { get; set; }
-            public int Height { get; set; }
         }
 
         private class AffineTransform
         {
             private readonly double[] _transform;
 
-            public AffineTransform(double[] transform)
-            {
-                _transform = transform;
-            }
+            public AffineTransform(double[] transform) => _transform = transform;
 
             public void GeoToPixel(double geoX, double geoY, out int pixelX, out int pixelY)
             {
                 pixelX = (int)((geoX - _transform[0]) / _transform[1]);
                 pixelY = (int)((geoY - _transform[3]) / _transform[5]);
-            }
-
-            public void PixelToGeo(double pixelX, double pixelY, out double geoX, out double geoY)
-            {
-                geoX = _transform[0] + pixelX * _transform[1];
-                geoY = _transform[3] + pixelY * _transform[5];
             }
         }
 
@@ -238,7 +208,7 @@ namespace SimplePointApplication.Tools
                     }
                 }
 
-                Cv2.GaussianBlur(src, dst, new Size(kernelSize, kernelSize), sigma);
+                Cv2.GaussianBlur(src, dst, new OpenCvSharp.Size(kernelSize, kernelSize), sigma);
 
                 var output = new double[width, height];
                 for (int y = 0; y < height; y++)

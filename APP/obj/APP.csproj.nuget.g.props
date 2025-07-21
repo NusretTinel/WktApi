@@ -21,6 +21,5 @@
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <PkgMicrosoft_Extensions_ApiDescription_Server Condition=" '$(PkgMicrosoft_Extensions_ApiDescription_Server)' == '' ">C:\Users\USER\.nuget\packages\microsoft.extensions.apidescription.server\6.0.5</PkgMicrosoft_Extensions_ApiDescription_Server>
-    <PkgGDAL Condition=" '$(PkgGDAL)' == '' ">C:\Users\USER\.nuget\packages\gdal\3.11.3</PkgGDAL>
   </PropertyGroup>
 </Project>
