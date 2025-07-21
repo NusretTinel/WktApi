@@ -7,7 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using SimplePointApplication.Controllers;
+using OSGeo.GDAL;
 
+
+
+Gdal.AllRegister();
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

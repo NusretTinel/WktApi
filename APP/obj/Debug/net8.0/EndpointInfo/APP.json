@@ -186,31 +186,33 @@
             "name": "cellSize",
             "in": "query",
             "schema": {
+              "maximum": 1000,
               "minimum": 0.1,
               "type": "number",
               "format": "double",
-              "default": 1
+              "default": 10
             }
           },
           {
             "name": "newBinCount",
             "in": "query",
             "schema": {
-              "maximum": 2147483647,
+              "maximum": 1000,
               "minimum": 1,
               "type": "integer",
               "format": "int32",
-              "default": 5
+              "default": 10
             }
           },
           {
             "name": "minDistance",
             "in": "query",
             "schema": {
+              "maximum": 10000,
               "minimum": 0,
               "type": "number",
               "format": "double",
-              "default": 0
+              "default": 50
             }
           }
         ],

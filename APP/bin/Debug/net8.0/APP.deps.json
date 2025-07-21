@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v8.0": {
       "APP/1.0.0": {
         "dependencies": {
+          "GDAL.Native": "3.11.3",
           "Microsoft.Data.SqlClient": "6.0.2",
           "Microsoft.EntityFrameworkCore": "9.0.6",
           "NetTopologySuite.IO.GeoJSON": "4.0.0",
@@ -16,7 +17,8 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite": "9.0.4",
           "OpenCvSharp4": "4.11.0.20250507",
           "OpenCvSharp4.runtime.win": "4.11.0.20250507",
-          "Swashbuckle.AspNetCore": "6.6.2"
+          "Swashbuckle.AspNetCore": "6.6.2",
+          "GDAL": "3.11.3"
         },
         "runtime": {
           "APP.dll": {}
@@ -55,6 +57,31 @@
             "assemblyVersion": "1.11.4.0",
             "fileVersion": "1.1100.424.31005"
           }
+        }
+      },
+      "GDAL/3.11.3": {
+        "runtime": {
+          "lib/netstandard2.0/gdal_csharp.dll": {
+            "assemblyVersion": "3.11.3.0",
+            "fileVersion": "3.11.3.0"
+          },
+          "lib/netstandard2.0/gdalconst_csharp.dll": {
+            "assemblyVersion": "3.11.3.0",
+            "fileVersion": "3.11.3.0"
+          },
+          "lib/netstandard2.0/ogr_csharp.dll": {
+            "assemblyVersion": "3.11.3.0",
+            "fileVersion": "3.11.3.0"
+          },
+          "lib/netstandard2.0/osr_csharp.dll": {
+            "assemblyVersion": "3.11.3.0",
+            "fileVersion": "3.11.3.0"
+          }
+        }
+      },
+      "GDAL.Native/3.11.3": {
+        "dependencies": {
+          "GDAL": "3.11.3"
         }
       },
       "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
@@ -707,6 +734,20 @@
       "sha512": "sha512-Sf4BoE6Q3jTgFkgBkx7qztYOFELBCo+wQgpYDwal/qJ1unBH73ywPztIJKXBXORRzAeNijsuxhk94h0TIMvfYg==",
       "path": "azure.identity/1.11.4",
       "hashPath": "azure.identity.1.11.4.nupkg.sha512"
+    },
+    "GDAL/3.11.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rvQKEJTCc81xVyIe2o5NcN3JrUTOfJ72C18RqA9VzZY7gSzM6mvKlS+OvUNzePCQUZjPJ0znbJXqqRFzSNgDpg==",
+      "path": "gdal/3.11.3",
+      "hashPath": "gdal.3.11.3.nupkg.sha512"
+    },
+    "GDAL.Native/3.11.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7mKQLsa6xPZ5kLWw3pgJ1kjjH7GW6Y1wj3WpfSXuU2kJvzTqtPnyvM7jzRBzEp+HNhN1Tl23HfCvuIhw9HwrsA==",
+      "path": "gdal.native/3.11.3",
+      "hashPath": "gdal.native.3.11.3.nupkg.sha512"
     },
     "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
       "type": "package",
