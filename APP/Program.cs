@@ -11,7 +11,7 @@ using SimplePointApplication.Controllers;
 
 
 var builder = WebApplication.CreateBuilder(args);
-
+GdalConfiguration.ConfigureGdal();
 // Add services to the container.
 builder.Services.AddCors(options =>
 {

@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "D7Onr5sUNNM=",
+  "dgSpecHash": "6PWRKkZ6O04=",
   "success": true,
   "projectFilePath": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\APP.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\USER\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
+    "C:\\Users\\USER\\.nuget\\packages\\gdal\\3.11.3\\gdal.3.11.3.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.bcl.cryptography\\8.0.0\\microsoft.bcl.cryptography.8.0.0.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\microsoft.data.sqlclient\\6.0.2\\microsoft.data.sqlclient.6.0.2.nupkg.sha512",

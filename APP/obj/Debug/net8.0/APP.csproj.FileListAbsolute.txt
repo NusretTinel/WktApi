@@ -299,3 +299,8 @@ C:\Users\USER\source\repos\NusretTinel\WktApi\APP\obj\Debug\net8.0\staticwebasse
 C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\System.Drawing.Common.dll
 C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\runtimes\win\lib\net8.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\gdal_csharp.dll
+C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\gdalconst_csharp.dll
+C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\ogr_csharp.dll
+C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\osr_csharp.dll
+C:\Users\USER\source\repos\NusretTinel\WktApi\APP\obj\Debug\net8.0\NuGet\4FDBA598CD19E19A922D0ABB3BCBB53EB60F2D99\GDAL\3.11.3\GdalConfiguration.cs

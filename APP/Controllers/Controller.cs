@@ -23,7 +23,7 @@ namespace SimplePointApplication.Controllers
         {
             _unitOfWork = unitOfWork;
             _wktReader = new WKTReader();
-            _populationDataPath = "C:\\Users\\USER\\Downloads\\GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0_R7_C19\\GHS_POP_E2030_GLOBE_R2023A_54009_100_V1_0_R7_C19.tif";
+            _populationDataPath = "C:\\Users\\USER\\Downloads\\tur_pop_2023_CN_100m_R2024B_v1.tif";
 
             if (!System.IO.File.Exists(_populationDataPath))
             {

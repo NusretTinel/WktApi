@@ -47,6 +47,35 @@
           }
         }
       },
+      "GDAL/3.11.3": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/gdal_csharp.dll": {},
+          "lib/netstandard2.0/gdalconst_csharp.dll": {},
+          "lib/netstandard2.0/ogr_csharp.dll": {},
+          "lib/netstandard2.0/osr_csharp.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/gdal_csharp.dll": {},
+          "lib/netstandard2.0/gdalconst_csharp.dll": {},
+          "lib/netstandard2.0/ogr_csharp.dll": {},
+          "lib/netstandard2.0/osr_csharp.dll": {}
+        },
+        "contentFiles": {
+          "contentFiles/cs/any/GdalConfiguration.cs.pp": {
+            "buildAction": "Compile",
+            "codeLanguage": "cs",
+            "copyToOutput": false,
+            "ppOutputPath": "GdalConfiguration.cs"
+          },
+          "contentFiles/vb/any/GdalConfiguration.vb.pp": {
+            "buildAction": "Compile",
+            "codeLanguage": "vb",
+            "copyToOutput": false,
+            "ppOutputPath": "GdalConfiguration.vb"
+          }
+        }
+      },
       "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
         "type": "package",
         "compile": {
@@ -1099,6 +1128,27 @@
         "azureicon.png",
         "lib/netstandard2.0/Azure.Identity.dll",
         "lib/netstandard2.0/Azure.Identity.xml"
+      ]
+    },
+    "GDAL/3.11.3": {
+      "sha512": "rvQKEJTCc81xVyIe2o5NcN3JrUTOfJ72C18RqA9VzZY7gSzM6mvKlS+OvUNzePCQUZjPJ0znbJXqqRFzSNgDpg==",
+      "type": "package",
+      "path": "gdal/3.11.3",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/GdalConfiguration.cs.pp",
+        "content/GdalConfiguration.vb.pp",
+        "contentFiles/cs/any/GdalConfiguration.cs.pp",
+        "contentFiles/vb/any/GdalConfiguration.vb.pp",
+        "gdal.3.11.3.nupkg.sha512",
+        "gdal.nuspec",
+        "lib/netstandard2.0/gdal_csharp.dll",
+        "lib/netstandard2.0/gdalconst_csharp.dll",
+        "lib/netstandard2.0/ogr_csharp.dll",
+        "lib/netstandard2.0/osr_csharp.dll",
+        "tools/install.ps1"
       ]
     },
     "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
@@ -2797,6 +2847,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "GDAL >= 3.11.3",
       "Microsoft.Data.SqlClient >= 6.0.2",
       "Microsoft.EntityFrameworkCore >= 9.0.6",
       "NetTopologySuite.IO.GeoJSON >= 4.0.0",
@@ -2859,6 +2910,10 @@
       "net8.0": {
         "targetAlias": "net8.0",
         "dependencies": {
+          "GDAL": {
+            "target": "Package",
+            "version": "[3.11.3, )"
+          },
           "Microsoft.Data.SqlClient": {
             "target": "Package",
             "version": "[6.0.2, )"
