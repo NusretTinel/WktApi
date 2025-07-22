@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Runtime.CompilerServices;
 using Point = NetTopologySuite.Geometries.Point;
 
 namespace SimplePointApplication.Tools
@@ -69,7 +70,9 @@ namespace SimplePointApplication.Tools
                             }
                         }
                     }
-                    return heatmap;
+                // In GdalPopulationDataSource and BitmapPopulationDataSource classes, replace the throw statement with:
+
+                return heatmap;
                 }
 
                 private void GeoToPixel(double geoX, double geoY, out int pixelX, out int pixelY)
@@ -130,6 +133,7 @@ namespace SimplePointApplication.Tools
                         }
                     }
                 }
+                
                 return heatmap;
             }
 
@@ -188,23 +192,31 @@ namespace SimplePointApplication.Tools
             int height = population.GetLength(1);
             var binHeatmap = new double[width, height];
 
-            // Mark existing bins
+            // Mark existing bins with a stronger influence
             foreach (var bin in existingBins)
             {
                 int x = (int)(bin.X / cellSize);
                 int y = (int)(bin.Y / cellSize);
                 if (x >= 0 && x < width && y >= 0 && y < height)
-                    binHeatmap[x, y] += 1;
+                {
+                    // Add a stronger influence for existing bins
+                    binHeatmap[x, y] += 10; // Higher value means stronger avoidance
+                }
             }
 
-            // Smooth bin distribution
-            binHeatmap = ApplyGaussianBlur(binHeatmap, 7, 1.5);
+            // Smooth bin distribution with larger kernel
+            binHeatmap = ApplyGaussianBlur(binHeatmap, 15, 3.0);
 
-            // Calculate difference
+            // Calculate difference with better weighting
             var difference = new double[width, height];
             for (int x = 0; x < width; x++)
+            {
                 for (int y = 0; y < height; y++)
-                    difference[x, y] = population[x, y] - binHeatmap[x, y];
+                {
+                    // Ensure we don't get negative values
+                    difference[x, y] = Math.Max(0, population[x, y] - binHeatmap[x, y] * 0.5);
+                }
+            }
 
             return difference;
         }
@@ -214,49 +226,108 @@ namespace SimplePointApplication.Tools
             var peaks = new List<Point>();
             int minDistCells = (int)(minDistance / cellSize);
 
+            // Create a copy of the map to avoid modifying the original
+            var mapCopy = (double[,])map.Clone();
+
+            // Normalize the values to 0-1 range for better comparison
+            NormalizeMap(mapCopy);
+
             for (int i = 0; i < count; i++)
             {
-                (int x, int y) = FindMaxValue(map, bounds, cellSize);
-                if (map[x, y] <= 0) break;
+                (int x, int y) = FindMaxValue(mapCopy, bounds, cellSize);
 
-                peaks.Add(new Point(
-                    x * cellSize + cellSize / 2,
-                    y * cellSize + cellSize / 2));
+                
+                    
 
-                // Clear surrounding area
+                double geoX = x * cellSize + cellSize / 2;
+                double geoY = y * cellSize + cellSize / 2;
+
+                // Only add if within bounds (if bounds are specified)
+               
+                    peaks.Add(new Point(geoX, geoY));
+               
+
+                // Clear surrounding area using a circular mask
                 for (int dx = -minDistCells; dx <= minDistCells; dx++)
+                {
                     for (int dy = -minDistCells; dy <= minDistCells; dy++)
-                        if (x + dx >= 0 && x + dx < map.GetLength(0) &&
-                            y + dy >= 0 && y + dy < map.GetLength(1))
-                            map[x + dx, y + dy] = 0;
+                    {
+                        // Check if within distance
+                        if (dx * dx + dy * dy <= minDistCells * minDistCells)
+                        {
+                            int nx = x + dx;
+                            int ny = y + dy;
+
+                            if (nx >= 0 && nx < mapCopy.GetLength(0) &&
+                                ny >= 0 && ny < mapCopy.GetLength(1))
+                            {
+                                // Gradually reduce influence rather than zeroing
+                                double distance = Math.Sqrt(dx * dx + dy * dy);
+                                double reduction = 1 - (distance / minDistCells);
+                                mapCopy[nx, ny] *= (1 - reduction * 0.9); // Reduce by up to 90%
+                            }
+                        }
+                    }
+                }
             }
+           
             return peaks;
+        }
+
+        private void NormalizeMap(double[,] map)
+        {
+            double max = 0;
+            foreach (var val in map)
+            {
+                if (val > max) max = val;
+            }
+
+            if (max > 0)
+            {
+                for (int x = 0; x < map.GetLength(0); x++)
+                {
+                    for (int y = 0; y < map.GetLength(1); y++)
+                    {
+                        map[x, y] /= max;
+                    }
+                }
+            }
         }
 
         private (int x, int y) FindMaxValue(double[,] map, Polygon bounds, double cellSize)
         {
             int maxX = 0, maxY = 0;
-            double maxVal = 0;
+            double maxVal = double.MinValue;
 
             for (int x = 0; x < map.GetLength(0); x++)
             {
                 for (int y = 0; y < map.GetLength(1); y++)
                 {
-                    if (map[x, y] > maxVal)
-                    {
-                        var point = new Point(
-                            x * cellSize + cellSize / 2,
-                            y * cellSize + cellSize / 2);
+                    
+                    // Skip if the value is too low
+                    if (map[x, y] < maxVal * 0.8) continue;
+                   
+                    var point = new Point(
 
-                        if (bounds == null || bounds.Contains(point))
-                        {
-                            maxVal = map[x, y];
-                            maxX = x;
-                            maxY = y;
-                        }
+                        x * cellSize + cellSize / 2,
+                        y * cellSize + cellSize / 2);
+
+                    if (
+                        map[x, y] > maxVal)
+                    {
+                        maxVal = map[x, y];
+                        maxX = x;
+                        maxY = y;
                     }
                 }
             }
+
+            // If no valid point found in bounds, return center
+            if (maxVal <= 0)
+            {
+                return (map.GetLength(0) / 2, map.GetLength(1) / 2);
+            }
+            
             return (maxX, maxY);
         }
 

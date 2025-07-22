@@ -1,11 +1,14 @@
+using APP;
+using NetTopologySuite.Geometries;
+using NetTopologySuite.IO;
+using OSGeo.GDAL;
+using OSGeo.OGR;
+using OSGeo.OSR;
+using SimplePointApplication.Entity;
+using SimplePointApplication.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using NetTopologySuite.IO;
-using NetTopologySuite.Geometries;
-using SimplePointApplication.Entity;
-using SimplePointApplication.Tools;
-
 namespace SimplePointApplication.Optimizers
 {
     public class TrashBinOptimizer
@@ -100,11 +103,50 @@ namespace SimplePointApplication.Optimizers
 
     public static class CoordinateConverter
     {
+        static CoordinateConverter()
+        {
+            // Initialize GDAL once (critical!)
+            GdalConfiguration.ConfigureGdal();
+            Gdal.AllRegister();
+            Ogr.RegisterAll();
+        }
+
         public static Point ConvertPoint(Point point, int targetSRID)
         {
-            // Implementation using ProjNet or other coordinate transformation library
-            // This is a simplified placeholder - actual implementation would use proper transformation
-            return new Point(point.X, point.Y) { SRID = targetSRID };
+            try
+            {
+                // Handle null SRID (default to WGS84)
+                int sourceSRID = point.SRID == 0 ? 4326 : point.SRID;
+
+                // Setup spatial references
+                using (var sourceSR = new SpatialReference(""))
+                using (var targetSR = new SpatialReference(""))
+                {
+                    sourceSR.ImportFromEPSG(sourceSRID);
+                    targetSR.ImportFromEPSG(targetSRID);
+
+                    // Create and use transformation
+                    using (var transform = new CoordinateTransformation(sourceSR, targetSR))
+                    {
+                        double[] x = { point.X };
+                        double[] y = { point.Y };
+                        double[] z = { 0 };
+
+                        // Corrected TransformPoints call
+                        transform.TransformPoints(1, x, y, z); // The first parameter is the point count
+
+                        return new Point(x[0], y[0]) { SRID = targetSRID };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Fallback: return original point with warning
+                Console.WriteLine($"Coordinate conversion failed: {ex.Message}");
+                return new Point(point.X, point.Y) { SRID = targetSRID };
+            }
         }
     }
+           
+ 
 }

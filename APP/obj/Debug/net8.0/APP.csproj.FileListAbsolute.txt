@@ -304,3 +304,9 @@ C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\gdalconst_csh
 C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\ogr_csharp.dll
 C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\osr_csharp.dll
 C:\Users\USER\source\repos\NusretTinel\WktApi\APP\obj\Debug\net8.0\NuGet\4FDBA598CD19E19A922D0ABB3BCBB53EB60F2D99\GDAL\3.11.3\GdalConfiguration.cs
+C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\Accord.dll.config
+C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\Accord.dll
+C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\Accord.MachineLearning.dll
+C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\Accord.Math.Core.dll
+C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\Accord.Math.dll
+C:\Users\USER\source\repos\NusretTinel\WktApi\APP\bin\Debug\net8.0\Accord.Statistics.dll

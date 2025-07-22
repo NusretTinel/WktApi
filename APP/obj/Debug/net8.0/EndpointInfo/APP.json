@@ -187,7 +187,6 @@
             "in": "query",
             "schema": {
               "maximum": 1000,
-              "minimum": 0.1,
               "type": "number",
               "format": "double",
               "default": 10
@@ -209,7 +208,6 @@
             "in": "query",
             "schema": {
               "maximum": 10000,
-              "minimum": 0,
               "type": "number",
               "format": "double",
               "default": 50

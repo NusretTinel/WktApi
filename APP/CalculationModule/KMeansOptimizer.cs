@@ -1,210 +1,227 @@
-﻿using System;
+﻿using Accord.MachineLearning;
+using NetTopologySuite.Geometries;
+using NetTopologySuite.IO;
+using OSGeo.GDAL;
+using OSGeo.OGR;
+using SimplePointApplication.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using NetTopologySuite.Geometries;
+using Envelope= NetTopologySuite.Geometries.Envelope;
+using static SimplePointApplication.Optimizers.TrashBinOptimizer;
 
-namespace SimplePointApplication.Tools
+namespace SimplePointApplication.Optimizers
 {
     public class KMeansOptimizer
     {
-        private readonly int _maxIterations;
-        private readonly Random _random;
+        private readonly List<Point> _existingBins;
+        private const int TargetSRID = 54009;
 
-        public KMeansOptimizer(int maxIterations = 100)
+        public KMeansOptimizer(List<WktModel> existingBins)
         {
-            _maxIterations = maxIterations;
-            _random = new Random();
+            _existingBins = WKTProcessor.ParseWKTToPoints(existingBins);
         }
 
-        public List<Point> Optimize(double[][] population, List<Point> existingBins,
-                                   double cellSize, int binCount, double minDistance,
-                                   Polygon polygon = null)
+        public List<WktModel> OptimizeTrashBins(
+            string populationDataSourcePath,
+            int gridWidth,
+            int gridHeight,
+            double cellSize,
+            int newBinCount,
+            double minDistance,
+            string polygonWkt = null)
         {
-            var weightedPoints = ConvertHeatmapToPoints(population, cellSize, polygon);
-            var allCentroids = new List<Point>(existingBins);
-            int newBinsToAdd = binCount;
+            // Step 1: Get population data
+            double[,] population = GetPopulationData(
+                populationDataSourcePath,
+                gridWidth,
+                gridHeight,
+                polygonWkt);
 
-            
-            if (newBinsToAdd > 0)
+            // Step 2: Convert to weighted points
+            var weightedPoints = ConvertToWeightedPoints(population, cellSize);
+            if (weightedPoints.Count == 0)
+                return new List<WktModel>();
+
+            // Step 3: Run K-means
+            var centroids = RunKMeans(weightedPoints, newBinCount, minDistance);
+
+            // Step 4: Convert back to WKT
+            return WKTProcessor.ConvertPointsToWKTModels(centroids);
+        }
+
+        private double[,] GetPopulationData(
+            string path,
+            int width,
+            int height,
+            string polygonWkt)
+        {
+            using (var dataSource = new GdalPopulationDataSource(path))
             {
-                var newCentroids = InitializeCentroids(weightedPoints, newBinsToAdd, existingBins, minDistance);
+                var polygon = string.IsNullOrEmpty(polygonWkt)
+                    ? null
+                    : (Polygon)new WKTReader().Read(polygonWkt);
 
-                allCentroids.AddRange(newCentroids);
+                return dataSource.GetPopulationDataForArea(width, height, polygon);
+            }
+        }
 
-                for (int i = 0; i < _maxIterations; i++)
+        private List<(double X, double Y, double Weight)> ConvertToWeightedPoints(
+            double[,] population, double cellSize)
+        {
+            var points = new List<(double, double, double)>();
+            for (int x = 0; x < population.GetLength(0); x++)
+            {
+                for (int y = 0; y < population.GetLength(1); y++)
                 {
-                    var clusters = AssignPointsToClusters(weightedPoints, allCentroids);
-                    var newPositions = CalculateNewCentroids(clusters);
-
-                    bool converged = true;
-                    for (int j = 0; j < allCentroids.Count; j++)
+                    if (population[x, y] > 0)
                     {
-                        if (allCentroids[j].Distance(newPositions[j]) > cellSize * 0.1) // Small threshold
+                        points.Add((
+                            x * cellSize + cellSize / 2,
+                            y * cellSize + cellSize / 2,
+                            population[x, y]));
+                    }
+                }
+            }
+            return points;
+        }
+
+        private List<Point> RunKMeans(
+            List<(double X, double Y, double Weight)> points,
+            int binCount,
+            double minDistance)
+        {
+            double[][] observations = points.Select(p => new[] { p.X, p.Y }).ToArray();
+            double[] weights = points.Select(p => p.Weight).ToArray();
+
+            var kmeans = new KMeans(binCount)
+            {
+                Tolerance = 0.05,
+                MaxIterations = 100
+            };
+
+            var clusters = kmeans.Learn(observations, weights);
+            var centroids = clusters.Centroids
+                .Select(c => new Point(c[0], c[1]) { SRID = TargetSRID })
+                .ToList();
+
+            return AdjustForMinDistance(centroids, minDistance);
+        }
+
+        private List<Point> AdjustForMinDistance(List<Point> points, double minDistance)
+        {
+            bool adjusted;
+            do
+            {
+                adjusted = false;
+                for (int i = 0; i < points.Count; i++)
+                {
+                    for (int j = i + 1; j < points.Count; j++)
+                    {
+                        double distance = points[i].Distance(points[j]);
+                        if (distance < minDistance)
                         {
-                            converged = false;
-                            break;
+                            double dx = points[j].X - points[i].X;
+                            double dy = points[j].Y - points[i].Y;
+                            double norm = Math.Sqrt(dx * dx + dy * dy);
+
+                            if (norm > 0)
+                            {
+                                double push = (minDistance - distance) / 2;
+                                points[i] = new Point(
+                                    points[i].X - dx / norm * push,
+                                    points[i].Y - dy / norm * push)
+                                { SRID = TargetSRID };
+
+                                points[j] = new Point(
+                                    points[j].X + dx / norm * push,
+                                    points[j].Y + dy / norm * push)
+                                { SRID = TargetSRID };
+
+                                adjusted = true;
+                            }
                         }
                     }
-
-                    if (converged) break;
-
-                    allCentroids = newPositions;
                 }
-            }
-            return allCentroids.Skip(existingBins.Count).Take(binCount).ToList();
+            } while (adjusted);
+
+            return points;
+        }
+    }
+
+    internal class GdalPopulationDataSource : IPopulationDataSource
+    {
+        private readonly Dataset _dataset;
+        private readonly double[] _geoTransform = new double[6];
+
+        public GdalPopulationDataSource(string path)
+        {
+            _dataset = Gdal.Open(path, Access.GA_ReadOnly);
+            if (_dataset == null)
+                throw new Exception("Failed to open GDAL dataset");
+            _dataset.GetGeoTransform(_geoTransform);
         }
 
-        private List<Point> InitializeCentroids(List<WeightedPoint> points, int k, List<Point> existingBins, double minDistance)
+        public double[,] GetPopulationDataForArea(int width, int height, Polygon bounds)
         {
-            var centroids = new List<Point>();
+            var heatmap = new double[width, height];
+            var env = bounds?.EnvelopeInternal ?? GetDefaultEnvelope();
 
-            while (centroids.Count < k && points.Count > 0)
-            {
-                double totalWeight = points.Sum(p => p.Weight);
-                double randomValue = _random.NextDouble() * totalWeight;
-
-                double cumulativeWeight = 0;
-                WeightedPoint selectedPoint = null;
-                foreach (var point in points)
-                {
-                    cumulativeWeight += point.Weight;
-                    if (cumulativeWeight >= randomValue)
-                    {
-                        selectedPoint = point;
-                        break;
-                    }
-                }
-
-                if (selectedPoint == null) continue;
-
-                var newCentroid = selectedPoint.Point;
-                bool isValid = true;
-
-                
-                foreach (var existing in existingBins)
-                {
-                    if (existing.Distance(newCentroid) < minDistance)
-                    {
-                        isValid = false;
-                        break;
-                    }
-                }
-
-                foreach (var centroid in centroids)
-                {
-                    if (centroid.Distance(newCentroid) < minDistance)
-                    {
-                        isValid = false;
-                        break;
-                    }
-                }
-
-                if (isValid)
-                {
-                    centroids.Add(newCentroid);
-                    points.RemoveAll(p => p.Point.Distance(newCentroid) < minDistance);
-                }
-                else
-                {
-                    points.Remove(selectedPoint);
-                }
-            }
-
-            return centroids;
-        }
-
-        private List<Cluster> AssignPointsToClusters(List<WeightedPoint> points, List<Point> centroids)
-        {
-            var clusters = centroids.Select(c => new Cluster { Centroid = c }).ToList();
-
-            foreach (var point in points)
-            {
-                Point nearestCentroid = null;
-                double minDistance = double.MaxValue;
-
-                foreach (var centroid in centroids)
-                {
-                    double distance = point.Point.Distance(centroid);
-                    if (distance < minDistance)
-                    {
-                        minDistance = distance;
-                        nearestCentroid = centroid;
-                    }
-                }
-                var cluster = clusters.First(c => c.Centroid == nearestCentroid);
-                cluster.Points.Add(point);
-            }
-
-            return clusters;
-        }
-
-        private List<Point> CalculateNewCentroids(List<Cluster> clusters)
-        {
-            var newCentroids = new List<Point>();
-
-            foreach (var cluster in clusters)
-            {
-                if (cluster.Points.Count == 0)
-                {
-                    newCentroids.Add(cluster.Centroid);
-                    continue;
-                }
-
-                
-                double totalWeight = cluster.Points.Sum(p => p.Weight);
-                double sumX = 0, sumY = 0;
-
-                foreach (var point in cluster.Points)
-                {
-                    sumX += point.Point.X * point.Weight;
-                    sumY += point.Point.Y * point.Weight;
-                }
-
-                double newX = sumX / totalWeight;
-                double newY = sumY / totalWeight;
-
-                newCentroids.Add(new Point(newX, newY));
-            }
-
-            return newCentroids;
-        }
-
-        private List<WeightedPoint> ConvertHeatmapToPoints(double[][] population, double cellSize, Polygon polygon)
-        {
-            var points = new List<WeightedPoint>();
-            int width = population.Length;
-            int height = population[0].Length;
+            Band band = _dataset.GetRasterBand(1);
+            double noDataValue = 0;
+            int hasVal;
+            band.GetNoDataValue(out noDataValue, out hasVal);
 
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
-                    double weight = population[x][y];
-                    if (weight <= 0) continue;
+                    double geoX = env.MinX + (env.MaxX - env.MinX) * x / width;
+                    double geoY = env.MinY + (env.MaxY - env.MinY) * y / height;
 
-                    double realX = x * cellSize + cellSize / 2;
-                    double realY = y * cellSize + cellSize / 2;
-                    var point = new Point(realX, realY);
-
-                    if (polygon != null && !polygon.Contains(point)) continue;
-
-                    points.Add(new WeightedPoint { Point = point, Weight = weight });
+                    if (bounds == null || bounds.Contains(new Point(geoX, geoY)))
+                    {
+                        GeoToPixel(geoX, geoY, out int px, out int py);
+                        if (IsInImage(px, py))
+                        {
+                            double[] value = new double[1];
+                            band.ReadRaster(px, py, 1, 1, value, 1, 1, 0, 0);
+                            heatmap[x, y] = (hasVal != 0 && value[0] == noDataValue) ? 0 : value[0];
+                        }
+                    }
                 }
             }
-
-            return points;
+            return heatmap;
         }
 
-        private class WeightedPoint
+        public void Dispose()
         {
-            public Point Point { get; set; }
-            public double Weight { get; set; }
+            _dataset?.Dispose();
+            GC.SuppressFinalize(this);
         }
 
-        private class Cluster
+        private Envelope GetDefaultEnvelope()
         {
-            public Point Centroid { get; set; }
-            public List<WeightedPoint> Points { get; set; } = new List<WeightedPoint>();
+            double minX = _geoTransform[0];
+            double maxY = _geoTransform[3];
+            double maxX = minX + _geoTransform[1] * _dataset.RasterXSize;
+            double minY = maxY + _geoTransform[5] * _dataset.RasterYSize;
+            return new Envelope(minX, maxX, minY, maxY);
         }
+
+        private void GeoToPixel(double geoX, double geoY, out int pixelX, out int pixelY)
+        {
+            pixelX = (int)((geoX - _geoTransform[0]) / _geoTransform[1]);
+            pixelY = (int)((geoY - _geoTransform[3]) / _geoTransform[5]);
+        }
+
+        private bool IsInImage(int x, int y) =>
+            x >= 0 && x < _dataset.RasterXSize &&
+            y >= 0 && y < _dataset.RasterYSize;
+    }
+
+    internal interface IPopulationDataSource : IDisposable
+    {
+        double[,] GetPopulationDataForArea(int width, int height, Polygon bounds);
     }
 }

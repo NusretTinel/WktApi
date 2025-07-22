@@ -6,12 +6,16 @@ using APP.UnýtOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using OSGeo.GDAL;
+using OSGeo.OGR;
 using SimplePointApplication.Controllers;
 
 
 
 var builder = WebApplication.CreateBuilder(args);
 GdalConfiguration.ConfigureGdal();
+Gdal.AllRegister();
+Ogr.RegisterAll();
 // Add services to the container.
 builder.Services.AddCors(options =>
 {

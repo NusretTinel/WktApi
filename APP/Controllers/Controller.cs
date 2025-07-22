@@ -17,7 +17,7 @@ namespace SimplePointApplication.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly WKTReader _wktReader;
         private readonly string _populationDataPath;
-        private const int MaxGridDimension = 1000;
+        private const int MaxGridDimension = 2147483647;
 
         public TrashBinController(IUnitOfWork unitOfWork, IConfiguration config)
         {
@@ -33,9 +33,9 @@ namespace SimplePointApplication.Controllers
 
         [HttpPost("optimize")]
         public IActionResult OptimizeTrashBins(
-            [FromQuery][Range(0.1, 1000)] double cellSize = 10.0,
+            [FromQuery][Range(0.000001, 1000)] double cellSize = 10.0,
             [FromQuery][Range(1, 1000)] int newBinCount = 10,
-            [FromQuery][Range(0, 10000)] double minDistance = 50.0,
+            [FromQuery][Range(0.000001, 10000)] double minDistance = 50.0,
             [FromBody] string polygonWkt = null)
         {
             try
