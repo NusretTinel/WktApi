@@ -2,6 +2,79 @@
   "version": 3,
   "targets": {
     "net8.0": {
+      "Accord/3.8.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Accord.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Accord.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "build/Accord.targets": {}
+        }
+      },
+      "Accord.MachineLearning/3.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Accord": "3.8.0",
+          "Accord.Math": "3.8.0",
+          "Accord.Statistics": "3.8.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Accord.MachineLearning.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Accord.MachineLearning.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Accord.Math/3.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Accord": "3.8.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Accord.Math.Core.dll": {
+            "related": ".xml"
+          },
+          "lib/netstandard2.0/Accord.Math.dll": {
+            "related": ".Core.xml;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Accord.Math.Core.dll": {
+            "related": ".xml"
+          },
+          "lib/netstandard2.0/Accord.Math.dll": {
+            "related": ".Core.xml;.xml"
+          }
+        }
+      },
+      "Accord.Statistics/3.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Accord": "3.8.0",
+          "Accord.Math": "3.8.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Accord.Statistics.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Accord.Statistics.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Azure.Core/1.38.0": {
         "type": "package",
         "dependencies": {
@@ -44,6 +117,35 @@
         "runtime": {
           "lib/netstandard2.0/Azure.Identity.dll": {
             "related": ".xml"
+          }
+        }
+      },
+      "GDAL/3.11.3": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/gdal_csharp.dll": {},
+          "lib/netstandard2.0/gdalconst_csharp.dll": {},
+          "lib/netstandard2.0/ogr_csharp.dll": {},
+          "lib/netstandard2.0/osr_csharp.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/gdal_csharp.dll": {},
+          "lib/netstandard2.0/gdalconst_csharp.dll": {},
+          "lib/netstandard2.0/ogr_csharp.dll": {},
+          "lib/netstandard2.0/osr_csharp.dll": {}
+        },
+        "contentFiles": {
+          "contentFiles/cs/any/GdalConfiguration.cs.pp": {
+            "buildAction": "Compile",
+            "codeLanguage": "cs",
+            "copyToOutput": false,
+            "ppOutputPath": "GdalConfiguration.cs"
+          },
+          "contentFiles/vb/any/GdalConfiguration.vb.pp": {
+            "buildAction": "Compile",
+            "codeLanguage": "vb",
+            "copyToOutput": false,
+            "ppOutputPath": "GdalConfiguration.vb"
           }
         }
       },
@@ -561,6 +663,28 @@
           }
         }
       },
+      "Microsoft.Win32.SystemEvents/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/Microsoft.Win32.SystemEvents.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.Win32.SystemEvents.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net8.0/Microsoft.Win32.SystemEvents.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
       "NetTopologySuite/2.5.0": {
         "type": "package",
         "dependencies": {
@@ -894,6 +1018,25 @@
           }
         }
       },
+      "System.Drawing.Common/8.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Win32.SystemEvents": "8.0.0"
+        },
+        "compile": {
+          "lib/net8.0/System.Drawing.Common.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Drawing.Common.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
       "System.IdentityModel.Tokens.Jwt/7.5.0": {
         "type": "package",
         "dependencies": {
@@ -1022,6 +1165,162 @@
     }
   },
   "libraries": {
+    "Accord/3.8.0": {
+      "sha512": "7kJrB570dO5ELim+2KWQNozuvWO9/BuZfZspdFy36fcWPNF2CEccblLuILeUlI8QJYd2DlBy0bfK8BlCx/uayA==",
+      "type": "package",
+      "path": "accord/3.8.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "accord.3.8.0.nupkg.sha512",
+        "accord.nuspec",
+        "build/Accord.dll.config",
+        "build/Accord.targets",
+        "lib/net35-unity full v3.5/Accord.dll",
+        "lib/net35-unity full v3.5/Accord.xml",
+        "lib/net35-unity micro v3.5/Accord.dll",
+        "lib/net35-unity micro v3.5/Accord.xml",
+        "lib/net35-unity subset v3.5/Accord.dll",
+        "lib/net35-unity subset v3.5/Accord.xml",
+        "lib/net35-unity web v3.5/Accord.dll",
+        "lib/net35-unity web v3.5/Accord.xml",
+        "lib/net35/Accord.dll",
+        "lib/net35/Accord.xml",
+        "lib/net40/Accord.dll",
+        "lib/net40/Accord.xml",
+        "lib/net45/Accord.dll",
+        "lib/net45/Accord.xml",
+        "lib/net46/Accord.dll",
+        "lib/net46/Accord.xml",
+        "lib/net462/Accord.dll",
+        "lib/net462/Accord.xml",
+        "lib/netstandard1.4/Accord.dll",
+        "lib/netstandard1.4/Accord.xml",
+        "lib/netstandard2.0/Accord.dll",
+        "lib/netstandard2.0/Accord.xml"
+      ]
+    },
+    "Accord.MachineLearning/3.8.0": {
+      "sha512": "6d8HY6/S4t5LBgD4YWrHISDX4q9s/caBu4fbHhq5RH2U4ETbtnDcvwgtsqGHKH1FyPylWFOniYjLO4B4xkEEuw==",
+      "type": "package",
+      "path": "accord.machinelearning/3.8.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "accord.machinelearning.3.8.0.nupkg.sha512",
+        "accord.machinelearning.nuspec",
+        "lib/net35-unity full v3.5/Accord.MachineLearning.dll",
+        "lib/net35-unity full v3.5/Accord.MachineLearning.xml",
+        "lib/net35-unity micro v3.5/Accord.MachineLearning.dll",
+        "lib/net35-unity micro v3.5/Accord.MachineLearning.xml",
+        "lib/net35-unity subset v3.5/Accord.MachineLearning.dll",
+        "lib/net35-unity subset v3.5/Accord.MachineLearning.xml",
+        "lib/net35-unity web v3.5/Accord.MachineLearning.dll",
+        "lib/net35-unity web v3.5/Accord.MachineLearning.xml",
+        "lib/net35/Accord.MachineLearning.dll",
+        "lib/net35/Accord.MachineLearning.xml",
+        "lib/net40/Accord.MachineLearning.dll",
+        "lib/net40/Accord.MachineLearning.xml",
+        "lib/net45/Accord.MachineLearning.dll",
+        "lib/net45/Accord.MachineLearning.xml",
+        "lib/net46/Accord.MachineLearning.dll",
+        "lib/net46/Accord.MachineLearning.xml",
+        "lib/net462/Accord.MachineLearning.dll",
+        "lib/net462/Accord.MachineLearning.xml",
+        "lib/netstandard1.4/Accord.MachineLearning.dll",
+        "lib/netstandard1.4/Accord.MachineLearning.xml",
+        "lib/netstandard2.0/Accord.MachineLearning.dll",
+        "lib/netstandard2.0/Accord.MachineLearning.xml"
+      ]
+    },
+    "Accord.Math/3.8.0": {
+      "sha512": "K3dzeQjDIrwRnoTRoMOoIbul2Uc0B8cnEtdrSlirmIo37C+jVkmYpJzme/z4Kg99XR2Vj5W5TTNlhjn+AKR+8A==",
+      "type": "package",
+      "path": "accord.math/3.8.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "accord.math.3.8.0.nupkg.sha512",
+        "accord.math.nuspec",
+        "lib/net35-unity full v3.5/Accord.Math.Core.dll",
+        "lib/net35-unity full v3.5/Accord.Math.Core.xml",
+        "lib/net35-unity full v3.5/Accord.Math.dll",
+        "lib/net35-unity full v3.5/Accord.Math.xml",
+        "lib/net35-unity micro v3.5/Accord.Math.Core.dll",
+        "lib/net35-unity micro v3.5/Accord.Math.Core.xml",
+        "lib/net35-unity micro v3.5/Accord.Math.dll",
+        "lib/net35-unity micro v3.5/Accord.Math.xml",
+        "lib/net35-unity subset v3.5/Accord.Math.Core.dll",
+        "lib/net35-unity subset v3.5/Accord.Math.Core.xml",
+        "lib/net35-unity subset v3.5/Accord.Math.dll",
+        "lib/net35-unity subset v3.5/Accord.Math.xml",
+        "lib/net35-unity web v3.5/Accord.Math.Core.dll",
+        "lib/net35-unity web v3.5/Accord.Math.Core.xml",
+        "lib/net35-unity web v3.5/Accord.Math.dll",
+        "lib/net35-unity web v3.5/Accord.Math.xml",
+        "lib/net35/Accord.Math.Core.dll",
+        "lib/net35/Accord.Math.Core.xml",
+        "lib/net35/Accord.Math.dll",
+        "lib/net35/Accord.Math.xml",
+        "lib/net40/Accord.Math.Core.dll",
+        "lib/net40/Accord.Math.Core.xml",
+        "lib/net40/Accord.Math.dll",
+        "lib/net40/Accord.Math.xml",
+        "lib/net45/Accord.Math.Core.dll",
+        "lib/net45/Accord.Math.Core.xml",
+        "lib/net45/Accord.Math.dll",
+        "lib/net45/Accord.Math.xml",
+        "lib/net46/Accord.Math.Core.dll",
+        "lib/net46/Accord.Math.Core.xml",
+        "lib/net46/Accord.Math.dll",
+        "lib/net46/Accord.Math.xml",
+        "lib/net462/Accord.Math.Core.dll",
+        "lib/net462/Accord.Math.Core.xml",
+        "lib/net462/Accord.Math.dll",
+        "lib/net462/Accord.Math.xml",
+        "lib/netstandard1.4/Accord.Math.Core.dll",
+        "lib/netstandard1.4/Accord.Math.Core.xml",
+        "lib/netstandard1.4/Accord.Math.dll",
+        "lib/netstandard1.4/Accord.Math.xml",
+        "lib/netstandard2.0/Accord.Math.Core.dll",
+        "lib/netstandard2.0/Accord.Math.Core.xml",
+        "lib/netstandard2.0/Accord.Math.dll",
+        "lib/netstandard2.0/Accord.Math.xml"
+      ]
+    },
+    "Accord.Statistics/3.8.0": {
+      "sha512": "8WsmCE31Qdy3FmRvwtAY3F9/fJEi/6uyLQrhOvSI6pP6gpoaacmCrJRIphkGf2EB8gKHRWLAc4UXr1OOPHxkmQ==",
+      "type": "package",
+      "path": "accord.statistics/3.8.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "accord.statistics.3.8.0.nupkg.sha512",
+        "accord.statistics.nuspec",
+        "lib/net35-unity full v3.5/Accord.Statistics.dll",
+        "lib/net35-unity full v3.5/Accord.Statistics.xml",
+        "lib/net35-unity micro v3.5/Accord.Statistics.dll",
+        "lib/net35-unity micro v3.5/Accord.Statistics.xml",
+        "lib/net35-unity subset v3.5/Accord.Statistics.dll",
+        "lib/net35-unity subset v3.5/Accord.Statistics.xml",
+        "lib/net35-unity web v3.5/Accord.Statistics.dll",
+        "lib/net35-unity web v3.5/Accord.Statistics.xml",
+        "lib/net35/Accord.Statistics.dll",
+        "lib/net35/Accord.Statistics.xml",
+        "lib/net40/Accord.Statistics.dll",
+        "lib/net40/Accord.Statistics.xml",
+        "lib/net45/Accord.Statistics.dll",
+        "lib/net45/Accord.Statistics.xml",
+        "lib/net46/Accord.Statistics.dll",
+        "lib/net46/Accord.Statistics.xml",
+        "lib/net462/Accord.Statistics.dll",
+        "lib/net462/Accord.Statistics.xml",
+        "lib/netstandard1.4/Accord.Statistics.dll",
+        "lib/netstandard1.4/Accord.Statistics.xml",
+        "lib/netstandard2.0/Accord.Statistics.dll",
+        "lib/netstandard2.0/Accord.Statistics.xml"
+      ]
+    },
     "Azure.Core/1.38.0": {
       "sha512": "IuEgCoVA0ef7E4pQtpC3+TkPbzaoQfa77HlfJDmfuaJUCVJmn7fT0izamZiryW5sYUFKizsftIxMkXKbgIcPMQ==",
       "type": "package",
@@ -1058,6 +1357,27 @@
         "azureicon.png",
         "lib/netstandard2.0/Azure.Identity.dll",
         "lib/netstandard2.0/Azure.Identity.xml"
+      ]
+    },
+    "GDAL/3.11.3": {
+      "sha512": "rvQKEJTCc81xVyIe2o5NcN3JrUTOfJ72C18RqA9VzZY7gSzM6mvKlS+OvUNzePCQUZjPJ0znbJXqqRFzSNgDpg==",
+      "type": "package",
+      "path": "gdal/3.11.3",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/GdalConfiguration.cs.pp",
+        "content/GdalConfiguration.vb.pp",
+        "contentFiles/cs/any/GdalConfiguration.cs.pp",
+        "contentFiles/vb/any/GdalConfiguration.vb.pp",
+        "gdal.3.11.3.nupkg.sha512",
+        "gdal.nuspec",
+        "lib/netstandard2.0/gdal_csharp.dll",
+        "lib/netstandard2.0/gdalconst_csharp.dll",
+        "lib/netstandard2.0/ogr_csharp.dll",
+        "lib/netstandard2.0/osr_csharp.dll",
+        "tools/install.ps1"
       ]
     },
     "Microsoft.Bcl.AsyncInterfaces/1.1.1": {
@@ -2013,6 +2333,41 @@
         "microsoft.sqlserver.server.nuspec"
       ]
     },
+    "Microsoft.Win32.SystemEvents/8.0.0": {
+      "sha512": "9opKRyOKMCi2xJ7Bj7kxtZ1r9vbzosMvRrdEhVhDz8j8MoBGgB+WmC94yH839NPH+BclAjtQ/pyagvi/8gDLkw==",
+      "type": "package",
+      "path": "microsoft.win32.systemevents/8.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/Microsoft.Win32.SystemEvents.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/Microsoft.Win32.SystemEvents.targets",
+        "lib/net462/Microsoft.Win32.SystemEvents.dll",
+        "lib/net462/Microsoft.Win32.SystemEvents.xml",
+        "lib/net6.0/Microsoft.Win32.SystemEvents.dll",
+        "lib/net6.0/Microsoft.Win32.SystemEvents.xml",
+        "lib/net7.0/Microsoft.Win32.SystemEvents.dll",
+        "lib/net7.0/Microsoft.Win32.SystemEvents.xml",
+        "lib/net8.0/Microsoft.Win32.SystemEvents.dll",
+        "lib/net8.0/Microsoft.Win32.SystemEvents.xml",
+        "lib/netstandard2.0/Microsoft.Win32.SystemEvents.dll",
+        "lib/netstandard2.0/Microsoft.Win32.SystemEvents.xml",
+        "microsoft.win32.systemevents.8.0.0.nupkg.sha512",
+        "microsoft.win32.systemevents.nuspec",
+        "runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll",
+        "runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.xml",
+        "runtimes/win/lib/net7.0/Microsoft.Win32.SystemEvents.dll",
+        "runtimes/win/lib/net7.0/Microsoft.Win32.SystemEvents.xml",
+        "runtimes/win/lib/net8.0/Microsoft.Win32.SystemEvents.dll",
+        "runtimes/win/lib/net8.0/Microsoft.Win32.SystemEvents.xml",
+        "useSharedDesignerContext.txt"
+      ]
+    },
     "NetTopologySuite/2.5.0": {
       "sha512": "5/+2O2ADomEdUn09mlSigACdqvAf0m/pVPGtIPEPQWnyrVykYY0NlfXLIdkMgi41kvH9kNrPqYaFBTZtHYH7Xw==",
       "type": "package",
@@ -2413,6 +2768,46 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "System.Drawing.Common/8.0.0": {
+      "sha512": "JkbHJjtI/dWc5dfmEdJlbe3VwgZqCkZRtfuWFh5GOv0f+gGCfBtzMpIVkmdkj2AObO9y+oiOi81UGwH3aBYuqA==",
+      "type": "package",
+      "path": "system.drawing.common/8.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Drawing.Common.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Drawing.Common.targets",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net462/System.Drawing.Common.dll",
+        "lib/net462/System.Drawing.Common.pdb",
+        "lib/net462/System.Drawing.Common.xml",
+        "lib/net6.0/System.Drawing.Common.dll",
+        "lib/net6.0/System.Drawing.Common.pdb",
+        "lib/net6.0/System.Drawing.Common.xml",
+        "lib/net7.0/System.Drawing.Common.dll",
+        "lib/net7.0/System.Drawing.Common.pdb",
+        "lib/net7.0/System.Drawing.Common.xml",
+        "lib/net8.0/System.Drawing.Common.dll",
+        "lib/net8.0/System.Drawing.Common.pdb",
+        "lib/net8.0/System.Drawing.Common.xml",
+        "lib/netstandard2.0/System.Drawing.Common.dll",
+        "lib/netstandard2.0/System.Drawing.Common.pdb",
+        "lib/netstandard2.0/System.Drawing.Common.xml",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "system.drawing.common.8.0.0.nupkg.sha512",
+        "system.drawing.common.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
     "System.IdentityModel.Tokens.Jwt/7.5.0": {
       "sha512": "D0TtrWOfoPdyYSlvOGaU9F1QR+qrbgJ/4eiEsQkIz7YQKIKkGXQldXukn6cYG9OahSq5UVMvyAIObECpH6Wglg==",
       "type": "package",
@@ -2681,6 +3076,8 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "Accord.MachineLearning >= 3.8.0",
+      "GDAL >= 3.11.3",
       "Microsoft.Data.SqlClient >= 6.0.2",
       "Microsoft.EntityFrameworkCore >= 9.0.6",
       "NetTopologySuite.IO.GeoJSON >= 4.0.0",
@@ -2689,7 +3086,8 @@
       "Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite >= 9.0.4",
       "OpenCvSharp4 >= 4.11.0.20250507",
       "OpenCvSharp4.runtime.win >= 4.11.0.20250507",
-      "Swashbuckle.AspNetCore >= 6.6.2"
+      "Swashbuckle.AspNetCore >= 6.6.2",
+      "System.Drawing.Common >= 8.0.0"
     ]
   },
   "packageFolders": {
@@ -2742,6 +3140,14 @@
       "net8.0": {
         "targetAlias": "net8.0",
         "dependencies": {
+          "Accord.MachineLearning": {
+            "target": "Package",
+            "version": "[3.8.0, )"
+          },
+          "GDAL": {
+            "target": "Package",
+            "version": "[3.11.3, )"
+          },
           "Microsoft.Data.SqlClient": {
             "target": "Package",
             "version": "[6.0.2, )"
@@ -2777,6 +3183,10 @@
           "Swashbuckle.AspNetCore": {
             "target": "Package",
             "version": "[6.6.2, )"
+          },
+          "System.Drawing.Common": {
+            "target": "Package",
+            "version": "[8.0.0, )"
           }
         },
         "imports": [

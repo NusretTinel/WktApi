@@ -13,6 +13,18 @@
     {
       "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\calculationmodule\\trashbinoptimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:calculationmodule\\trashbinoptimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\calculationmodule\\kmeansoptimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:calculationmodule\\kmeansoptimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\app.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:app.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,11 +34,60 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "KMeansOptimizer.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\CalculationModule\\KMeansOptimizer.cs",
+              "RelativeDocumentMoniker": "CalculationModule\\KMeansOptimizer.cs",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\CalculationModule\\KMeansOptimizer.cs",
+              "RelativeToolTip": "CalculationModule\\KMeansOptimizer.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAkwDkAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T08:12:14.425Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAAABEAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-21T13:55:25.783Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "APP.csproj",
+              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\APP.csproj",
+              "RelativeDocumentMoniker": "APP.csproj",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\APP.csproj",
+              "RelativeToolTip": "APP.csproj",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-07-21T12:00:45.195Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Controller.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Controllers\\Controller.cs",
+              "RelativeDocumentMoniker": "Controllers\\Controller.cs",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Controllers\\Controller.cs",
+              "RelativeToolTip": "Controllers\\Controller.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAADwvyUAAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-17T08:35:11.118Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -36,7 +97,7 @@
               "RelativeDocumentMoniker": "CalculationModule\\TrashBinOptimizer.cs",
               "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\CalculationModule\\TrashBinOptimizer.cs",
               "RelativeToolTip": "CalculationModule\\TrashBinOptimizer.cs",
-              "ViewState": "AgIAADQAAAAAAAAAAAAAAEcAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAIcAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-17T08:15:16.503Z"
             },
@@ -48,21 +109,9 @@
               "RelativeDocumentMoniker": "CalculationModule\\Optimizer.cs",
               "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\CalculationModule\\Optimizer.cs",
               "RelativeToolTip": "CalculationModule\\Optimizer.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAAAC0AAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAEYBAAAAAAAAAAAAAFEBAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-17T08:15:16.174Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Controller.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Controllers\\Controller.cs",
-              "RelativeDocumentMoniker": "Controllers\\Controller.cs",
-              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Controllers\\Controller.cs",
-              "RelativeToolTip": "Controllers\\Controller.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAAAB0AAABpAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-17T08:35:11.118Z",
+              "WhenOpened": "2025-07-17T08:15:16.174Z",
               "EditorCaption": ""
             }
           ]

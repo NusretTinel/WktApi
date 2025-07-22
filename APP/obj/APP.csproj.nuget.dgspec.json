@@ -50,6 +50,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Accord.MachineLearning": {
+              "target": "Package",
+              "version": "[3.8.0, )"
+            },
+            "GDAL": {
+              "target": "Package",
+              "version": "[3.11.3, )"
+            },
             "Microsoft.Data.SqlClient": {
               "target": "Package",
               "version": "[6.0.2, )"
@@ -85,6 +93,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.6.2, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [
