@@ -9,6 +9,7 @@ using SimplePointApplication.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 namespace SimplePointApplication.Optimizers
 {
     public class TrashBinOptimizer
@@ -53,10 +54,14 @@ namespace SimplePointApplication.Optimizers
             {
                 return points.Select(p =>
                 {
+                    Console.WriteLine($"Before conversion - X: {p.X}, Y: {p.Y}, SRID: {p.SRID}");
+
                     if (p.SRID != 4326) // Always output in WGS84 (EPSG:4326)
                     {
                         p = CoordinateConverter.ConvertPoint(p, 4326);
+                        Console.WriteLine($"After conversion - X: {p.X}, Y: {p.Y}, SRID: {p.SRID}");
                     }
+
                     return new WktModel
                     {
                         Geometry = p,
@@ -66,7 +71,6 @@ namespace SimplePointApplication.Optimizers
                 }).ToList();
             }
         }
-
         public TrashBinOptimizer(List<WktModel> trashBins)
         {
             _trashBins = trashBins;
@@ -101,52 +105,87 @@ namespace SimplePointApplication.Optimizers
         }
     }
 
-    public static class CoordinateConverter
-    {
-        static CoordinateConverter()
+
+        public static class CoordinateConverter
         {
-            // Initialize GDAL once (critical!)
-            GdalConfiguration.ConfigureGdal();
-            Gdal.AllRegister();
-            Ogr.RegisterAll();
-        }
+            private const string MollweideEsriWkt = @"
+        PROJCS[""World_Mollweide"",
+            GEOGCS[""WGS_84"",
+                DATUM[""WGS_1984"",
+                    SPHEROID[""WGS84"",6378137,298.257223563]],
+                PRIMEM[""Greenwich"",0],
+                UNIT[""Degree"",0.0174532925199433]],
+            PROJECTION[""Mollweide""],
+            PARAMETER[""False_Easting"",0],
+            PARAMETER[""False_Northing"",0],
+            PARAMETER[""Central_Meridian"",0],
+            UNIT[""Meter"",1],
+            AUTHORITY[""ESRI"",""54009""]]";
+
+            static CoordinateConverter()
+            {
+                GdalConfiguration.ConfigureGdal();
+                Gdal.AllRegister();
+                Ogr.RegisterAll();
+            }
 
         public static Point ConvertPoint(Point point, int targetSRID)
         {
             try
             {
-                // Handle null SRID (default to WGS84)
                 int sourceSRID = point.SRID == 0 ? 4326 : point.SRID;
+                Console.WriteLine($"Converting from SRID {sourceSRID} to {targetSRID}");
 
-                // Setup spatial references
                 using (var sourceSR = new SpatialReference(""))
                 using (var targetSR = new SpatialReference(""))
                 {
-                    sourceSR.ImportFromEPSG(sourceSRID);
-                    targetSR.ImportFromEPSG(targetSRID);
+                    // Handle source coordinate system
+                    if (sourceSRID == 54009)
+                    {
+                        string wkt = MollweideEsriWkt;
+                        if (sourceSR.ImportFromWkt(ref wkt) != 0)
+                            throw new Exception("Failed to create source spatial reference");
+                    }
+                    else
+                    {
+                        if (sourceSR.ImportFromEPSG(sourceSRID) != 0)
+                            throw new Exception("Failed to create source spatial reference");
+                    }
 
-                    // Create and use transformation
+                    // Handle target coordinate system
+                    if (targetSRID == 54009)
+                    {
+                        string wkt = MollweideEsriWkt;
+                        if (targetSR.ImportFromWkt(ref wkt) != 0)
+                            throw new Exception("Failed to create target spatial reference");
+                    }
+                    else
+                    {
+                        if (targetSR.ImportFromEPSG(targetSRID) != 0)
+                            throw new Exception("Failed to create target spatial reference");
+                    }
+
                     using (var transform = new CoordinateTransformation(sourceSR, targetSR))
                     {
+                        if (transform == null)
+                            throw new Exception("Failed to create coordinate transformation");
+
                         double[] x = { point.X };
                         double[] y = { point.Y };
                         double[] z = { 0 };
 
-                        // Corrected TransformPoints call
-                        transform.TransformPoints(1, x, y, z); // The first parameter is the point count
-
+                        transform.TransformPoints(1, x, y, z);
                         return new Point(x[0], y[0]) { SRID = targetSRID };
                     }
                 }
             }
             catch (Exception ex)
             {
-                // Fallback: return original point with warning
                 Console.WriteLine($"Coordinate conversion failed: {ex.Message}");
-                return new Point(point.X, point.Y) { SRID = targetSRID };
+                throw;
             }
         }
     }
-           
- 
-}
+    }
+
+
