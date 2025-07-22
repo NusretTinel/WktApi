@@ -23,7 +23,7 @@ namespace SimplePointApplication.Controllers
         {
             _unitOfWork = unitOfWork;
             _wktReader = new WKTReader();
-            _populationDataPath = "C:\\Users\\USER\\Downloads\\tur_pop_2023_CN_100m_R2024B_v1.tif";
+            _populationDataPath = "tur_pop_2023_CN_100m_R2024B_v1.tif";
 
             if (!System.IO.File.Exists(_populationDataPath))
             {
@@ -33,9 +33,9 @@ namespace SimplePointApplication.Controllers
 
         [HttpPost("optimize")]
         public IActionResult OptimizeTrashBins(
-            [FromQuery][Range(0.000001, 1000)] double cellSize = 10.0,
+            [FromQuery][Range(0.000001, 1000)] double cellSize = 0.009,
             [FromQuery][Range(1, 1000)] int newBinCount = 10,
-            [FromQuery][Range(0.000001, 10000)] double minDistance = 50.0,
+            [FromQuery][Range(0.000001, 10000)] double minDistance = 0.027,
             [FromBody] string polygonWkt = null)
         {
             try
