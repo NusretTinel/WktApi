@@ -57,6 +57,27 @@ namespace SimplePointApplication.Controllers
         {
             try
             {
+                var reader = new WKTReader(new GeometryFactory(new PrecisionModel(), 4326));
+                foreach (var point in points)
+                {
+                    var rawWkt = point.GetRawWkt();
+                    if (string.IsNullOrWhiteSpace(rawWkt))
+                    {
+                        return new { error = $"WKT değeri boş olamaz for point: {point.Name}" };
+                    }
+
+                    try
+                    {
+                        var geometry = reader.Read(rawWkt);
+                        geometry.SRID = 4326;
+                        point.Geometry = geometry;
+                    }
+                    catch (ParseException ex)
+                    {
+                        return new { error = $"Geometri hatalı for point {point.Name}: {ex.Message}" };
+                    }
+                }
+
                 _unitOfWork.genericRepository.AddRange(points);
                 _unitOfWork.Commit();
                 return points;
@@ -72,7 +93,13 @@ namespace SimplePointApplication.Controllers
         {
             try
             {
-                return _unitOfWork.genericRepository.GetAll();
+                var points = _unitOfWork.genericRepository.GetAll();
+                foreach (var point in points)
+                {
+                    // Log WKT for debugging
+                    Console.WriteLine($"Point ID: {point.Id}, Name: {point.Name}, WKT: {point.Wkt}");
+                }
+                return points;
             }
             catch (Exception ex)
             {
@@ -86,7 +113,7 @@ namespace SimplePointApplication.Controllers
             try
             {
                 var point = _unitOfWork.genericRepository.GetById(id);
-                return point ;
+                return point;
             }
             catch (Exception ex)
             {
@@ -132,7 +159,6 @@ namespace SimplePointApplication.Controllers
                 return new { error = $"Error updating point: {ex.Message}" };
             }
         }
-
 
         [HttpDelete("{id}")]
         public object Delete(int id)
