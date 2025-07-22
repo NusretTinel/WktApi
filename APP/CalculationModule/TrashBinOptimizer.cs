@@ -17,7 +17,7 @@ namespace SimplePointApplication.Optimizers
         private static readonly WKTReader _wktReader = new WKTReader();
         private readonly List<WktModel> _trashBins;
         private readonly Optimizer _optimizer;
-        private const int TargetSRID = 54009; // GHS_POP's Mollweide projection
+        private const int TargetSRID = 54009; 
 
         public class WKTProcessor
         {
@@ -56,7 +56,7 @@ namespace SimplePointApplication.Optimizers
                 {
                     Console.WriteLine($"Before conversion - X: {p.X}, Y: {p.Y}, SRID: {p.SRID}");
 
-                    if (p.SRID != 4326) // Always output in WGS84 (EPSG:4326)
+                    if (p.SRID != 4326) 
                     {
                         p = CoordinateConverter.ConvertPoint(p, 4326);
                         Console.WriteLine($"After conversion - X: {p.X}, Y: {p.Y}, SRID: {p.SRID}");
@@ -86,10 +86,9 @@ namespace SimplePointApplication.Optimizers
             double minDistance,
             string polygonWkt = null)
         {
-            // Convert bins to points in target CRS
+            
             var existingBins = WKTProcessor.ParseWKTToPoints(_trashBins);
 
-            // Get optimized bins
             var optimizedBins = _optimizer.Optimize(
                 populationDataSourcePath,
                 existingBins,
@@ -100,7 +99,7 @@ namespace SimplePointApplication.Optimizers
                 minDistance,
                 polygonWkt);
 
-            // Convert back to WGS84 (EPSG:4326)
+            
             return WKTProcessor.ConvertPointsToWKTModels(optimizedBins);
         }
     }
@@ -139,7 +138,7 @@ namespace SimplePointApplication.Optimizers
                 using (var sourceSR = new SpatialReference(""))
                 using (var targetSR = new SpatialReference(""))
                 {
-                    // Handle source coordinate system
+                    
                     if (sourceSRID == 54009)
                     {
                         string wkt = MollweideEsriWkt;
@@ -152,7 +151,7 @@ namespace SimplePointApplication.Optimizers
                             throw new Exception("Failed to create source spatial reference");
                     }
 
-                    // Handle target coordinate system
+                  
                     if (targetSRID == 54009)
                     {
                         string wkt = MollweideEsriWkt;
