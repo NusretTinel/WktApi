@@ -236,16 +236,14 @@ namespace SimplePointApplication.Tools
             {
                 (int x, int y) = FindMaxValue(mapCopy, bounds, cellSize);
 
-                
-                    
 
-                double geoX = x * cellSize + cellSize / 2;
-                double geoY = y * cellSize + cellSize / 2;
 
+
+                double geoX = bounds.EnvelopeInternal.MinX + (x * cellSize);  // Real-world X
+                double geoY = bounds.EnvelopeInternal.MinY + (y * cellSize);
                 // Only add if within bounds (if bounds are specified)
-               
-                    peaks.Add(new Point(geoX, geoY));
-               
+
+                peaks.Add(new Point(geoX, geoY) { SRID = 4326 });  // Explicitly set SRID
 
                 // Clear surrounding area using a circular mask
                 for (int dx = -minDistCells; dx <= minDistCells; dx++)
@@ -303,17 +301,18 @@ namespace SimplePointApplication.Tools
             {
                 for (int y = 0; y < map.GetLength(1); y++)
                 {
-                    
                     // Skip if the value is too low
                     if (map[x, y] < maxVal * 0.8) continue;
-                   
-                    var point = new Point(
 
-                        x * cellSize + cellSize / 2,
-                        y * cellSize + cellSize / 2);
+                    // Calculate the real-world coordinates
+                    double geoX = bounds.EnvelopeInternal.MinX + (x * cellSize);
+                    double geoY = bounds.EnvelopeInternal.MinY + (y * cellSize);
+                    var point = new Point(geoX, geoY);
 
-                    if (
-                        map[x, y] > maxVal)
+                    // Check if the point is within the polygon (if bounds are complex)
+                    if (bounds != null && !bounds.Contains(point)) continue;
+
+                    if (map[x, y] > maxVal)
                     {
                         maxVal = map[x, y];
                         maxX = x;
@@ -322,12 +321,6 @@ namespace SimplePointApplication.Tools
                 }
             }
 
-            // If no valid point found in bounds, return center
-            if (maxVal <= 0)
-            {
-                return (map.GetLength(0) / 2, map.GetLength(1) / 2);
-            }
-            
             return (maxX, maxY);
         }
 
