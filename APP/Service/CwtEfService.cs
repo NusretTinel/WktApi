@@ -16,13 +16,14 @@ namespace APP.Service
             _unitOfWork = unitOfWork;    
         }
         
-            public bool Add(string name, Geometry WKT)
+            public bool Add(string name, Geometry WKT,string type)
             {
                 var result = new Result();
             var _point = new WktModel
             {
                 Name = name,
-                Geometry = WKT
+                Geometry = WKT,
+                TypeN = type
             };
             _unitOfWork.genericRepository.Add(_point);
              _unitOfWork.Commit();
