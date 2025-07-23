@@ -40,7 +40,7 @@ namespace SimplePointApplication.Controllers
         {
             try
             {
-                // Validate polygon
+                
                 Polygon polygon = null;
                 if (!string.IsNullOrEmpty(polygonWkt))
                 {
@@ -50,20 +50,19 @@ namespace SimplePointApplication.Controllers
                     polygon = (Polygon)geometry;
                 }
 
-                // Get existing bins (filtered by polygon if provided)
+                
                 var allBins = _unitOfWork.genericRepository.GetAll().ToList();
                 var existingBins = polygon != null
                     ? allBins.Where(b => IsPointInPolygon(b.Wkt, polygon)).ToList()
                     : allBins;
 
-                // Validate bins
+             
                 if (existingBins.Any(b => string.IsNullOrWhiteSpace(b.Wkt)))
                     return BadRequest("Some existing bins have invalid WKT data");
 
-                // Calculate grid dimensions dynamically
+                
                 var (gridWidth, gridHeight) = CalculateGridDimensions(polygon, cellSize);
 
-                // Optimize
                 var optimizer = new TrashBinOptimizer(existingBins);
                 var result = optimizer.OptimizeTrashBins(
                     _populationDataPath,
@@ -86,14 +85,14 @@ namespace SimplePointApplication.Controllers
         {
             if (polygon == null)
             {
-                return (500, 500); // Default fallback
+                return (500, 500); 
             }
 
             var env = polygon.EnvelopeInternal;
             int width = (int)Math.Ceiling((env.MaxX - env.MinX) / cellSize);
             int height = (int)Math.Ceiling((env.MaxY - env.MinY) / cellSize);
 
-            // Apply maximum dimension limit
+          
             if (width > MaxGridDimension || height > MaxGridDimension)
             {
                 double scaleFactor = Math.Max(

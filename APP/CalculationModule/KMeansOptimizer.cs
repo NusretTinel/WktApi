@@ -2,13 +2,10 @@
 using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
 using OSGeo.GDAL;
-using OSGeo.OGR;
-using SimplePointApplication.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Envelope= NetTopologySuite.Geometries.Envelope;
-using static SimplePointApplication.Optimizers.TrashBinOptimizer;
+using Envelope = NetTopologySuite.Geometries.Envelope;
 
 namespace SimplePointApplication.Optimizers
 {
@@ -17,53 +14,87 @@ namespace SimplePointApplication.Optimizers
         private readonly List<Point> _existingBins;
         private const int TargetSRID = 54009;
 
-        public KMeansOptimizer(List<WktModel> existingBins)
+        public KMeansOptimizer(List<Point> existingBins)
         {
-            _existingBins = WKTProcessor.ParseWKTToPoints(existingBins);
+            _existingBins = existingBins ?? new List<Point>();
         }
 
-        public List<WktModel> OptimizeTrashBins(
+        public List<Point> Optimize(
             string populationDataSourcePath,
             int gridWidth,
             int gridHeight,
             double cellSize,
-            int newBinCount,
+            int binCount,
             double minDistance,
             string polygonWkt = null)
         {
-            // Step 1: Get population data
-            double[,] population = GetPopulationData(
-                populationDataSourcePath,
-                gridWidth,
-                gridHeight,
-                polygonWkt);
-
-            // Step 2: Convert to weighted points
-            var weightedPoints = ConvertToWeightedPoints(population, cellSize);
-            if (weightedPoints.Count == 0)
-                return new List<WktModel>();
-
-            // Step 3: Run K-means
-            var centroids = RunKMeans(weightedPoints, newBinCount, minDistance);
-
-            // Step 4: Convert back to WKT
-            return WKTProcessor.ConvertPointsToWKTModels(centroids);
-        }
-
-        private double[,] GetPopulationData(
-            string path,
-            int width,
-            int height,
-            string polygonWkt)
-        {
-            using (var dataSource = new GdalPopulationDataSource(path))
+            using (var dataSource = CreateBestDataSource(populationDataSourcePath))
             {
-                var polygon = string.IsNullOrEmpty(polygonWkt)
-                    ? null
+                Polygon polygon = string.IsNullOrEmpty(polygonWkt) 
+                    ? CreateDefaultPolygon(gridWidth, gridHeight, cellSize)
                     : (Polygon)new WKTReader().Read(polygonWkt);
 
-                return dataSource.GetPopulationDataForArea(width, height, polygon);
+                // Step 1: Get population data
+                var population = dataSource.GetPopulationDataForArea(gridWidth, gridHeight, polygon);
+
+                // Step 2: Calculate difference map considering existing bins
+                var difference = CalculateDifferenceMap(population, _existingBins, cellSize);
+
+                // Step 3: Convert to weighted points
+                var weightedPoints = ConvertToWeightedPoints(difference, cellSize);
+                if (weightedPoints.Count == 0)
+                    return new List<Point>();
+
+                // Step 4: Run K-means
+                var centroids = RunKMeans(weightedPoints, binCount, minDistance);
+
+                return centroids;
             }
+        }
+
+        private IPopulationDataSource CreateBestDataSource(string path)
+        {
+            try
+            {
+                return new GdalPopulationDataSource(path);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to create GDAL data source: {ex.Message}");
+            }
+        }
+
+        private double[,] CalculateDifferenceMap(double[,] population, List<Point> existingBins, double cellSize)
+        {
+            int width = population.GetLength(0);
+            int height = population.GetLength(1);
+            var binHeatmap = new double[width, height];
+
+            // Mark existing bin locations
+            foreach (var bin in existingBins)
+            {
+                int x = (int)(bin.X / cellSize);
+                int y = (int)(bin.Y / cellSize);
+                if (x >= 0 && x < width && y >= 0 && y < height)
+                {
+                    binHeatmap[x, y] += 10;
+                }
+            }
+
+            // Apply Gaussian blur to existing bins
+            binHeatmap = ApplyGaussianBlur(binHeatmap, 15, 3.0);
+
+            // Calculate difference between population and existing bins
+            var difference = new double[width, height];
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    difference[x, y] = Math.Max(0, population[x, y] - binHeatmap[x, y] * 0.5);
+                }
+            }
+
+            return difference;
         }
 
         private List<(double X, double Y, double Weight)> ConvertToWeightedPoints(
@@ -147,81 +178,115 @@ namespace SimplePointApplication.Optimizers
 
             return points;
         }
-    }
 
-    internal class GdalPopulationDataSource : IPopulationDataSource
-    {
-        private readonly Dataset _dataset;
-        private readonly double[] _geoTransform = new double[6];
-
-        public GdalPopulationDataSource(string path)
+        private double[,] ApplyGaussianBlur(double[,] input, int kernelSize, double sigma)
         {
-            _dataset = Gdal.Open(path, Access.GA_ReadOnly);
-            if (_dataset == null)
-                throw new Exception("Failed to open GDAL dataset");
-            _dataset.GetGeoTransform(_geoTransform);
+            using (var src = new OpenCvSharp.Mat(input.GetLength(1), input.GetLength(0), OpenCvSharp.MatType.CV_64FC1))
+            using (var dst = new OpenCvSharp.Mat())
+            {
+                // Transpose the input to match OpenCV's row/column order
+                for (int y = 0; y < src.Rows; y++)
+                    for (int x = 0; x < src.Cols; x++)
+                        src.Set(y, x, input[x, y]);
+
+                OpenCvSharp.Cv2.GaussianBlur(src, dst, new OpenCvSharp.Size(kernelSize, kernelSize), sigma);
+
+                // Transpose back to original order
+                var output = new double[input.GetLength(0), input.GetLength(1)];
+                for (int y = 0; y < dst.Rows; y++)
+                    for (int x = 0; x < dst.Cols; x++)
+                        output[x, y] = dst.Get<double>(y, x);
+
+                return output;
+            }
         }
 
-        public double[,] GetPopulationDataForArea(int width, int height, Polygon bounds)
+        private Polygon CreateDefaultPolygon(int width, int height, double cellSize)
         {
-            var heatmap = new double[width, height];
-            var env = bounds?.EnvelopeInternal ?? GetDefaultEnvelope();
-
-            Band band = _dataset.GetRasterBand(1);
-            double noDataValue = 0;
-            int hasVal;
-            band.GetNoDataValue(out noDataValue, out hasVal);
-
-            for (int x = 0; x < width; x++)
+            return new Polygon(new LinearRing(new[]
             {
-                for (int y = 0; y < height; y++)
-                {
-                    double geoX = env.MinX + (env.MaxX - env.MinX) * x / width;
-                    double geoY = env.MinY + (env.MaxY - env.MinY) * y / height;
+                new Coordinate(0, 0),
+                new Coordinate(width * cellSize, 0),
+                new Coordinate(width * cellSize, height * cellSize),
+                new Coordinate(0, height * cellSize),
+                new Coordinate(0, 0)
+            }));
+        }
 
-                    if (bounds == null || bounds.Contains(new Point(geoX, geoY)))
+        private class GdalPopulationDataSource : IPopulationDataSource
+        {
+            private readonly Dataset _dataset;
+            private readonly double[] _geoTransform = new double[6];
+
+            public GdalPopulationDataSource(string path)
+            {
+                _dataset = Gdal.Open(path, Access.GA_ReadOnly);
+                if (_dataset == null)
+                    throw new Exception("Failed to open GDAL dataset");
+                _dataset.GetGeoTransform(_geoTransform);
+            }
+
+            public double[,] GetPopulationDataForArea(int width, int height, Polygon bounds)
+            {
+                var heatmap = new double[width, height];
+                var env = bounds?.EnvelopeInternal ?? GetDefaultEnvelope();
+
+                Band band = _dataset.GetRasterBand(1);
+                double noDataValue = 0;
+                int hasVal;
+                band.GetNoDataValue(out noDataValue, out hasVal);
+
+                for (int x = 0; x < width; x++)
+                {
+                    for (int y = 0; y < height; y++)
                     {
-                        GeoToPixel(geoX, geoY, out int px, out int py);
-                        if (IsInImage(px, py))
+                        double geoX = env.MinX + (env.MaxX - env.MinX) * x / width;
+                        double geoY = env.MinY + (env.MaxY - env.MinY) * y / height;
+
+                        if (bounds == null || bounds.Contains(new Point(geoX, geoY)))
                         {
-                            double[] value = new double[1];
-                            band.ReadRaster(px, py, 1, 1, value, 1, 1, 0, 0);
-                            heatmap[x, y] = (hasVal != 0 && value[0] == noDataValue) ? 0 : value[0];
+                            GeoToPixel(geoX, geoY, out int px, out int py);
+                            if (IsInImage(px, py))
+                            {
+                                double[] value = new double[1];
+                                band.ReadRaster(px, py, 1, 1, value, 1, 1, 0, 0);
+                                heatmap[x, y] = (hasVal != 0 && value[0] == noDataValue) ? 0 : value[0];
+                            }
                         }
                     }
                 }
+                return heatmap;
             }
-            return heatmap;
+
+            public void Dispose()
+            {
+                _dataset?.Dispose();
+                GC.SuppressFinalize(this);
+            }
+
+            private Envelope GetDefaultEnvelope()
+            {
+                double minX = _geoTransform[0];
+                double maxY = _geoTransform[3];
+                double maxX = minX + _geoTransform[1] * _dataset.RasterXSize;
+                double minY = maxY + _geoTransform[5] * _dataset.RasterYSize;
+                return new Envelope(minX, maxX, minY, maxY);
+            }
+
+            private void GeoToPixel(double geoX, double geoY, out int pixelX, out int pixelY)
+            {
+                pixelX = (int)((geoX - _geoTransform[0]) / _geoTransform[1]);
+                pixelY = (int)((geoY - _geoTransform[3]) / _geoTransform[5]);
+            }
+
+            private bool IsInImage(int x, int y) =>
+                x >= 0 && x < _dataset.RasterXSize &&
+                y >= 0 && y < _dataset.RasterYSize;
         }
 
-        public void Dispose()
+        private interface IPopulationDataSource : IDisposable
         {
-            _dataset?.Dispose();
-            GC.SuppressFinalize(this);
+            double[,] GetPopulationDataForArea(int width, int height, Polygon bounds);
         }
-
-        private Envelope GetDefaultEnvelope()
-        {
-            double minX = _geoTransform[0];
-            double maxY = _geoTransform[3];
-            double maxX = minX + _geoTransform[1] * _dataset.RasterXSize;
-            double minY = maxY + _geoTransform[5] * _dataset.RasterYSize;
-            return new Envelope(minX, maxX, minY, maxY);
-        }
-
-        private void GeoToPixel(double geoX, double geoY, out int pixelX, out int pixelY)
-        {
-            pixelX = (int)((geoX - _geoTransform[0]) / _geoTransform[1]);
-            pixelY = (int)((geoY - _geoTransform[3]) / _geoTransform[5]);
-        }
-
-        private bool IsInImage(int x, int y) =>
-            x >= 0 && x < _dataset.RasterXSize &&
-            y >= 0 && y < _dataset.RasterYSize;
-    }
-
-    internal interface IPopulationDataSource : IDisposable
-    {
-        double[,] GetPopulationDataForArea(int width, int height, Polygon bounds);
     }
 }
