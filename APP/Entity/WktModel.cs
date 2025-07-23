@@ -11,6 +11,9 @@ namespace SimplePointApplication.Entity
     {
         public int Id { get; set; }
         public string? Name { get; set; }
+
+        public string?  TypeN { get; set; }
+        
         private string? _wkt;
         [JsonIgnore]
         public Geometry? Geometry { get; set; }
