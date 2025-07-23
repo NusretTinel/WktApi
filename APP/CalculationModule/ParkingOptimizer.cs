@@ -59,25 +59,44 @@ namespace SimplePointApplication.Optimizers
                     var population = dataSource.GetPopulationDataForArea(gridWidth, gridHeight,
                         new WKTReader().Read(envelopeText) as Polygon);
 
-                    // 5. Calculate population reach for each candidate point
+                    // 5. Calculate population reach for each candidate point (sum in radius around point)
                     var scoredPoints = candidatePoints.Select(p =>
                     {
-                        int x = (int)((p.X - envelope.MinX) / cellSize);
-                        int y = (int)((p.Y - envelope.MinY) / cellSize);
+                        int centerX = (int)((p.X - envelope.MinX) / cellSize);
+                        int centerY = (int)((p.Y - envelope.MinY) / cellSize);
 
-                        if (x >= 0 && x < gridWidth && y >= 0 && y < gridHeight)
+                        double score = 0;
+                        int radius = (int)(minDistance / cellSize);
+
+                        // Sum population in surrounding area
+                        for (int x = Math.Max(0, centerX - radius); x <= Math.Min(gridWidth - 1, centerX + radius); x++)
                         {
-                            return new { Point = p, Score = population[x, y] };
+                            for (int y = Math.Max(0, centerY - radius); y <= Math.Min(gridHeight - 1, centerY + radius); y++)
+                            {
+                                double distance = Math.Sqrt(Math.Pow(x - centerX, 2) + Math.Pow(y - centerY, 2)) * cellSize;
+                                if (distance <= minDistance)
+                                {
+                                    score += population[x, y] * (1 - distance / minDistance); // Weight by distance
+                                }
+                            }
                         }
-                        return new { Point = p, Score = 0.0 };
+
+                        return new { Point = p, Score = score };
                     }).ToList();
 
-                    // 6. Filter and sort by population reach
-                    var topPoints = scoredPoints
-                        .OrderByDescending(p => p.Score)
-                        .Take(topN)
-                        .Select(p => p.Point)
-                        .ToList();
+                    // 6. Filter and sort by population reach, ensuring minimum distance
+                    var topPoints = new List<Point>();
+                    var remainingPoints = scoredPoints.OrderByDescending(p => p.Score).ToList();
+
+                    while (topPoints.Count < topN && remainingPoints.Any())
+                    {
+                        var bestPoint = remainingPoints.First();
+                        topPoints.Add(bestPoint.Point);
+
+                        // Remove points too close to the selected one
+                        remainingPoints = remainingPoints.Where(p =>
+                            p.Point.Distance(bestPoint.Point) >= minDistance).ToList();
+                    }
 
                     // 7. Convert results back to WGS84 and create WktModels
                     var results = ConvertResults(topPoints);

@@ -51,20 +51,17 @@ namespace SimplePointApplication.Controllers
 
         [HttpPost("optimize")]
         public ActionResult<List<WktModel>> OptimizeParkingSpots(
+     [FromBody] List<WktModel> candidateSpots,
      [FromQuery][Range(1, 1000)] int topN = 10,
      [FromQuery][Range(0.000001, 10000)] double minDistance = 500,
      [FromQuery][Range(0.000001, 10000)] double cellSize = 100)
         {
-            var candidateSpots = new List<WktModel>
-    {
-        new WktModel { Id = 1, Name = "Taksim Square", Wkt = "POINT (28.9871 41.0370)" },
-        new WktModel { Id = 2, Name = "Sultanahmet", Wkt = "POINT (28.9764 41.0055)" },
-        new WktModel { Id = 3, Name = "Kadikoy", Wkt = "POINT (29.0206 40.9906)" },
-        new WktModel { Id = 4, Name = "Besiktas", Wkt = "POINT (29.0089 41.0429)" },
-        new WktModel { Id = 5, Name = "Levent", Wkt = "POINT (28.9949 41.0794)" },
-        new WktModel { Id = 6, Name = "Bebek", Wkt = "POINT (29.0433 41.0772)" },
-        new WktModel { Id = 7, Name = "Uskudar", Wkt = "POINT (29.0267 41.0228)" }
-    };
+            if (candidateSpots == null || candidateSpots.Count == 0)
+            {
+                _logger.LogWarning("Empty or null candidate spots list received");
+                return BadRequest("At least one candidate spot must be provided");
+            }
+
 
             try
             {
