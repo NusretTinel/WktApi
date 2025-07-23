@@ -5,6 +5,77 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/ParkingOptimization/optimize": {
+      "post": {
+        "tags": [
+          "ParkingOptimization"
+        ],
+        "parameters": [
+          {
+            "name": "topN",
+            "in": "query",
+            "schema": {
+              "maximum": 1000,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          },
+          {
+            "name": "minDistance",
+            "in": "query",
+            "schema": {
+              "maximum": 10000,
+              "type": "number",
+              "format": "double",
+              "default": 0.027
+            }
+          },
+          {
+            "name": "cellSize",
+            "in": "query",
+            "schema": {
+              "maximum": 1,
+              "type": "number",
+              "format": "double",
+              "default": 0.009
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WktModel"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WktModel"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WktModel"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Point/Add": {
       "post": {
         "tags": [

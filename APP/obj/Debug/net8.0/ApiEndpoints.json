@@ -1,5 +1,41 @@
 [
   {
+    "ContainingType": "SimplePointApplication.Controllers.ParkingOptimizationController",
+    "Method": "OptimizeParkingSpots",
+    "RelativePath": "api/ParkingOptimization/optimize",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "topN",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "minDistance",
+        "Type": "System.Double",
+        "IsRequired": false
+      },
+      {
+        "Name": "cellSize",
+        "Type": "System.Double",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[SimplePointApplication.Entity.WktModel, APP, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "SimplePointApplication.Controllers.TrashBinController",
     "Method": "OptimizeTrashBins",
     "RelativePath": "api/TrashBin/optimize",
