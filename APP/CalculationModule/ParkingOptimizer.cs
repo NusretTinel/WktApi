@@ -18,11 +18,6 @@ namespace SimplePointApplication.Optimizers
         private const int OutputSRID = 4326;
         private static readonly WKTReader _wktReader = new WKTReader();
 
-        // Configuration constants
-        private const int MaxRecommendedGridDimension = 10000; // 10,000 × 10,000 grid
-        private const double MinRecommendedCellSize = 0.0001; // ~10 meters in degrees
-        private const int MaxTotalCells = 100000000; // 100M elements (10,000 × 10,000)
-
         public ParkingOptimizer(string populationDataPath, ILogger logger = null)
         {
             _populationDataPath = populationDataPath;
@@ -32,39 +27,64 @@ namespace SimplePointApplication.Optimizers
         }
 
         public List<WktModel> OptimizeParkingSpots(
-            List<WktModel> candidateSpots,
-            int topN,
-            double minDistance,
-            double requestedCellSize)
+    List<WktModel> candidateSpots,
+    int topN,
+    double minDistance,
+    double cellSize)
         {
             try
             {
-                _logger?.LogInformation("Beginning parking spot optimization");
+                _logger?.LogInformation("Starting optimization with {Count} candidate spots", candidateSpots.Count);
 
-                var candidatePoints = ParseWKTToPoints(candidateSpots);
+                // 1. Parse and convert input points
+                var candidatePoints = ParseAndConvertPoints(candidateSpots);
                 if (!candidatePoints.Any())
                 {
-                    _logger?.LogError("No valid points could be parsed from input");
-                    throw new Exception("No valid geographic points found in input");
+                    throw new Exception("No valid points could be parsed from input");
                 }
 
+                // 2. Calculate envelope in target SRID
                 var envelope = CalculateEnvelope(candidatePoints);
-                var (gridWidth, gridHeight, effectiveCellSize) =
-                    CalculateSafeGridDimensions(envelope, requestedCellSize);
+                _logger?.LogInformation($"Envelope in SRID {TargetSRID}: MinX={envelope.MinX}, MaxX={envelope.MaxX}, MinY={envelope.MinY}, MaxY={envelope.MaxY}");
 
-                _logger?.LogDebug($"Using grid: {gridWidth}x{gridHeight}, Cell size: {effectiveCellSize}");
+                // 3. Calculate grid dimensions
+                int gridWidth = Math.Max(1, (int)Math.Ceiling(envelope.Width / cellSize));
+                int gridHeight = Math.Max(1, (int)Math.Ceiling(envelope.Height / cellSize));
+                _logger?.LogInformation($"Using grid: {gridWidth}x{gridHeight}, Cell size: {cellSize}m");
 
-                var optimizedPoints = _optimizer.Optimize(
-                    _populationDataPath,
-                    candidatePoints,
-                    gridWidth,
-                    gridHeight,
-                    effectiveCellSize,
-                    topN,
-                    minDistance,
-                    null);
+                // 4. Get population data for the area
+                using (var dataSource = new Optimizer.GdalPopulationDataSource(_populationDataPath))
+                {
+                    string envelopeText = $"POLYGON(({envelope.MinX} {envelope.MinY}, {envelope.MaxX} {envelope.MinY}, {envelope.MaxX} {envelope.MaxY}, {envelope.MinX} {envelope.MaxY}, {envelope.MinX} {envelope.MinY}))";
+                    var population = dataSource.GetPopulationDataForArea(gridWidth, gridHeight,
+                        new WKTReader().Read(envelopeText) as Polygon);
 
-                return ConvertToWktModels(optimizedPoints);
+                    // 5. Calculate population reach for each candidate point
+                    var scoredPoints = candidatePoints.Select(p =>
+                    {
+                        int x = (int)((p.X - envelope.MinX) / cellSize);
+                        int y = (int)((p.Y - envelope.MinY) / cellSize);
+
+                        if (x >= 0 && x < gridWidth && y >= 0 && y < gridHeight)
+                        {
+                            return new { Point = p, Score = population[x, y] };
+                        }
+                        return new { Point = p, Score = 0.0 };
+                    }).ToList();
+
+                    // 6. Filter and sort by population reach
+                    var topPoints = scoredPoints
+                        .OrderByDescending(p => p.Score)
+                        .Take(topN)
+                        .Select(p => p.Point)
+                        .ToList();
+
+                    // 7. Convert results back to WGS84 and create WktModels
+                    var results = ConvertResults(topPoints);
+                    LogResults(results);
+
+                    return results;
+                }
             }
             catch (Exception ex)
             {
@@ -73,126 +93,82 @@ namespace SimplePointApplication.Optimizers
             }
         }
 
-        private (int width, int height, double cellSize) CalculateSafeGridDimensions(
-            Envelope envelope,
-            double requestedCellSize)
-        {
-            // Calculate initial dimensions
-            double rawWidth = envelope.Width / requestedCellSize;
-            double rawHeight = envelope.Height / requestedCellSize;
-
-            // Check if we need adjustment
-            bool needsAdjustment =
-                rawWidth > MaxRecommendedGridDimension ||
-                rawHeight > MaxRecommendedGridDimension ||
-                requestedCellSize < MinRecommendedCellSize ||
-                (rawWidth * rawHeight) > MaxTotalCells;
-
-            if (!needsAdjustment)
-            {
-                return (
-                    (int)Math.Ceiling(rawWidth),
-                    (int)Math.Ceiling(rawHeight),
-                    requestedCellSize
-                );
-            }
-
-            // Calculate required adjustment factor
-            double widthRatio = rawWidth / MaxRecommendedGridDimension;
-            double heightRatio = rawHeight / MaxRecommendedGridDimension;
-            double cellSizeRatio = MinRecommendedCellSize / requestedCellSize;
-            double areaRatio = (rawWidth * rawHeight) / MaxTotalCells;
-
-            double adjustmentFactor = Math.Max(
-                Math.Max(widthRatio, heightRatio),
-                Math.Max(cellSizeRatio, Math.Sqrt(areaRatio)));
-
-            double adjustedCellSize = requestedCellSize * adjustmentFactor;
-
-            // Calculate final dimensions
-            int finalWidth = (int)Math.Ceiling(envelope.Width / adjustedCellSize);
-            int finalHeight = (int)Math.Ceiling(envelope.Height / adjustedCellSize);
-
-            _logger?.LogWarning($"Adjusted grid from {rawWidth}x{rawHeight} to {finalWidth}x{finalHeight} " +
-                              $"with cell size {adjustedCellSize} (requested: {requestedCellSize})");
-
-            return (finalWidth, finalHeight, adjustedCellSize);
-        }
-
-        private List<Point> ParseWKTToPoints(List<WktModel> models)
+        private List<Point> ParseAndConvertPoints(List<WktModel> models)
         {
             var points = new List<Point>();
-
             foreach (var model in models)
             {
                 try
                 {
-                    var wkt = model.GetRawWkt();
-                    if (string.IsNullOrWhiteSpace(wkt))
-                    {
-                        _logger?.LogWarning("Empty WKT string in model ID: {Id}", model.Id);
-                        continue;
-                    }
-
-                    var geometry = _wktReader.Read(wkt) as Point;
+                    var geometry = _wktReader.Read(model.GetRawWkt()) as Point;
                     if (geometry == null)
                     {
                         _logger?.LogWarning("Invalid point geometry in model ID: {Id}", model.Id);
                         continue;
                     }
 
-                    if (double.IsNaN(geometry.X) || double.IsNaN(geometry.Y))
-                    {
-                        _logger?.LogWarning("Invalid coordinates in model ID: {Id}", model.Id);
-                        continue;
-                    }
+                    // Set default SRID if not specified
+                    geometry.SRID = geometry.SRID == -1 ? 4326 : geometry.SRID;
 
-                    // Assign default SRID if not set (WGS84)
-                    if (geometry.SRID == -1)
-                    {
-                        geometry.SRID = 4326;
-                        _logger?.LogDebug($"Assigned default SRID 4326 to point from model ID: {model.Id}");
-                    }
+                    // Convert to target SRID for calculations
+                    var convertedPoint = geometry.SRID == TargetSRID
+                        ? geometry
+                        : CoordinateConverter.ConvertPoint(geometry, TargetSRID);
 
-                    var point = geometry.SRID == TargetSRID ?
-                        geometry :
-                        CoordinateConverter.ConvertPoint(geometry, TargetSRID);
-
-                    points.Add(point);
+                    points.Add(convertedPoint);
                 }
                 catch (Exception ex)
                 {
-                    _logger?.LogError(ex, $"Failed to parse WKT in model ID: {model.Id}");
+                    _logger?.LogError(ex, $"Failed to parse point from model {model.Id}");
                 }
             }
-
-            _logger?.LogInformation($"Parsed {points.Count} valid points from {models.Count} inputs");
             return points;
         }
 
-        private List<WktModel> ConvertToWktModels(List<Point> points)
+        private List<WktModel> ConvertResults(List<Point> optimizedPoints)
         {
-            return points.Select(p =>
+            var results = new List<WktModel>();
+            foreach (var point in optimizedPoints)
             {
                 try
                 {
-                    var outputPoint = p.SRID == OutputSRID ?
-                        p :
-                        CoordinateConverter.ConvertPoint(p, OutputSRID);
+                    // Convert back to WGS84 for output
+                    var outputPoint = point.SRID == OutputSRID
+                        ? point
+                        : CoordinateConverter.ConvertPoint(point, OutputSRID);
 
-                    return new WktModel
+                    results.Add(new WktModel
                     {
                         Wkt = outputPoint.ToText(),
                         Geometry = outputPoint,
                         Name = "Optimized Parking Spot"
-                    };
+                    });
                 }
                 catch (Exception ex)
                 {
-                    _logger?.LogError(ex, $"Failed to convert point: {p}");
-                    return null;
+                    _logger?.LogError(ex, $"Failed to convert point {point} to output format");
                 }
-            }).Where(x => x != null).ToList();
+            }
+            return results;
+        }
+
+        private void LogCoordinateConversion(List<WktModel> inputModels, List<Point> convertedPoints)
+        {
+            for (int i = 0; i < inputModels.Count; i++)
+            {
+                if (i < convertedPoints.Count)
+                {
+                    _logger?.LogDebug($"Point {i}: Original: {inputModels[i].Wkt} -> Converted: SRID={convertedPoints[i].SRID}, X={convertedPoints[i].X}, Y={convertedPoints[i].Y}");
+                }
+            }
+        }
+
+        private void LogResults(List<WktModel> results)
+        {
+            foreach (var result in results)
+            {
+                _logger?.LogDebug($"Optimized point: {result.Wkt}");
+            }
         }
 
         private Envelope CalculateEnvelope(List<Point> points)
@@ -202,12 +178,16 @@ namespace SimplePointApplication.Optimizers
             {
                 envelope.ExpandToInclude(point.Coordinate);
             }
+
+            // Add 10% buffer to ensure all points are within bounds
+            envelope.ExpandBy(envelope.Width * 0.1, envelope.Height * 0.1);
+
             return envelope;
         }
 
         public void Dispose()
         {
-            // Clean up resources if needed
+            // Clean up if needed
         }
     }
 }

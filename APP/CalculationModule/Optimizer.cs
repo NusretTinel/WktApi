@@ -21,7 +21,7 @@ namespace SimplePointApplication.Tools
 
         
 
-            private class GdalPopulationDataSource : IPopulationDataSource
+            public class GdalPopulationDataSource : IPopulationDataSource
             {
                 private readonly Dataset _dataset;
                 private readonly double[] _geoTransform = new double[6];

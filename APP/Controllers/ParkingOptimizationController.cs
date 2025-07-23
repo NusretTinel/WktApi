@@ -52,8 +52,8 @@ namespace SimplePointApplication.Controllers
         [HttpPost("optimize")]
         public ActionResult<List<WktModel>> OptimizeParkingSpots(
      [FromQuery][Range(1, 1000)] int topN = 10,
-     [FromQuery][Range(0.000001, 10000)] double minDistance = 0.027,
-     [FromQuery][Range(0.000001, 1)] double cellSize = 0.009)
+     [FromQuery][Range(0.000001, 10000)] double minDistance = 500,
+     [FromQuery][Range(0.000001, 10000)] double cellSize = 100)
         {
             var candidateSpots = new List<WktModel>
     {
@@ -65,19 +65,10 @@ namespace SimplePointApplication.Controllers
         new WktModel { Id = 6, Name = "Bebek", Wkt = "POINT (29.0433 41.0772)" },
         new WktModel { Id = 7, Name = "Uskudar", Wkt = "POINT (29.0267 41.0228)" }
     };
-        
+
             try
             {
                 _logger.LogInformation("Starting optimization with {Count} candidate spots", candidateSpots.Count);
-
-                // Verify WKT was properly set
-                foreach (var spot in candidateSpots)
-                {
-                    if (spot.Geometry == null)
-                    {
-                        _logger.LogWarning("Failed to parse WKT for spot {Id}: {Wkt}", spot.Id, spot.Wkt);
-                    }
-                }
 
                 using (var optimizer = new ParkingOptimizer(_populationDataPath, _logger))
                 {

@@ -29,17 +29,17 @@
               "maximum": 10000,
               "type": "number",
               "format": "double",
-              "default": 0.027
+              "default": 500
             }
           },
           {
             "name": "cellSize",
             "in": "query",
             "schema": {
-              "maximum": 1,
+              "maximum": 10000,
               "type": "number",
               "format": "double",
-              "default": 0.009
+              "default": 100
             }
           }
         ],
@@ -322,6 +322,10 @@
             "format": "int32"
           },
           "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "typeN": {
             "type": "string",
             "nullable": true
           },
