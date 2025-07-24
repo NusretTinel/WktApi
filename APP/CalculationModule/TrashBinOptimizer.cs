@@ -54,12 +54,12 @@ namespace SimplePointApplication.Optimizers
             {
                 return points.Select(p =>
                 {
-                    Console.WriteLine($"Before conversion - X: {p.X}, Y: {p.Y}, SRID: {p.SRID}");
+                    
 
                     if (p.SRID != 4326) 
                     {
                         p = CoordinateConverter.ConvertPoint(p, 4326);
-                        Console.WriteLine($"After conversion - X: {p.X}, Y: {p.Y}, SRID: {p.SRID}");
+                        
                     }
 
                     return new WktModel
@@ -133,7 +133,7 @@ namespace SimplePointApplication.Optimizers
             try
             {
                 int sourceSRID = point.SRID == 0 ? 4326 : point.SRID;
-                Console.WriteLine($"Converting from SRID {sourceSRID} to {targetSRID}");
+                
 
                 using (var sourceSR = new SpatialReference(""))
                 using (var targetSR = new SpatialReference(""))
@@ -180,8 +180,8 @@ namespace SimplePointApplication.Optimizers
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Coordinate conversion failed: {ex.Message}");
-                throw;
+                
+                throw new Exception($"{ex.Message}");
             }
         }
     }

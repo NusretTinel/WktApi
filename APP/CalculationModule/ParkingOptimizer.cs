@@ -81,7 +81,6 @@ namespace SimplePointApplication.Optimizers
                     {
                         var bestItem = remainingItems.First();
 
-                        // Convert the bestItem to WktModel
                         var outputPoint = bestItem.Point.SRID == OutputSRID
                             ? bestItem.Point
                             : CoordinateConverter.ConvertPoint(bestItem.Point, OutputSRID);
