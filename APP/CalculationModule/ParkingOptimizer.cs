@@ -27,37 +27,31 @@ namespace SimplePointApplication.Optimizers
         }
 
         public List<WktModel> OptimizeParkingSpots(
-    List<WktModel> candidateSpots,
-    int topN,
-    double minDistance,
-    double cellSize)
+            List<WktModel> candidateSpots,
+            int topN,
+            double minDistance,
+            double cellSize)
         {
             try
             {
-                
-
                 var candidatePoints = ParseAndConvertPoints(candidateSpots);
                 if (!candidatePoints.Any())
                 {
                     throw new Exception("No valid points could be parsed from input");
                 }
 
-            
                 var envelope = CalculateEnvelope(candidatePoints);
-                
-                
+
                 int gridWidth = Math.Max(1, (int)Math.Ceiling(envelope.Width / cellSize));
                 int gridHeight = Math.Max(1, (int)Math.Ceiling(envelope.Height / cellSize));
-                
-               
+
                 using (var dataSource = new Optimizer.GdalPopulationDataSource(_populationDataPath))
                 {
                     string envelopeText = $"POLYGON(({envelope.MinX} {envelope.MinY}, {envelope.MaxX} {envelope.MinY}, {envelope.MaxX} {envelope.MaxY}, {envelope.MinX} {envelope.MaxY}, {envelope.MinX} {envelope.MinY}))";
                     var population = dataSource.GetPopulationDataForArea(gridWidth, gridHeight,
                         new WKTReader().Read(envelopeText) as Polygon);
 
-                    
-                    var scoredPoints = candidatePoints.Select(p =>
+                    var scoredItems = candidatePoints.Select((p, index) =>
                     {
                         int centerX = (int)((p.X - envelope.MinX) / cellSize);
                         int centerY = (int)((p.Y - envelope.MinY) / cellSize);
@@ -65,7 +59,6 @@ namespace SimplePointApplication.Optimizers
                         double score = 0;
                         int radius = (int)(minDistance / cellSize);
 
-                        
                         for (int x = Math.Max(0, centerX - radius); x <= Math.Min(gridWidth - 1, centerX + radius); x++)
                         {
                             for (int y = Math.Max(0, centerY - radius); y <= Math.Min(gridHeight - 1, centerY + radius); y++)
@@ -73,38 +66,41 @@ namespace SimplePointApplication.Optimizers
                                 double distance = Math.Sqrt(Math.Pow(x - centerX, 2) + Math.Pow(y - centerY, 2)) * cellSize;
                                 if (distance <= minDistance)
                                 {
-                                    score += population[x, y] * (1 - distance / minDistance); 
+                                    score += population[x, y] * (1 - distance / minDistance);
                                 }
                             }
                         }
 
-                        return new { Point = p, Score = score };
+                        return new { Point = p, Score = score, OriginalModel = candidateSpots[index] };
                     }).ToList();
 
-                    
-                    var topPoints = new List<Point>();
-                    var remainingPoints = scoredPoints.OrderByDescending(p => p.Score).ToList();
+                    var topItems = new List<WktModel>();
+                    var remainingItems = scoredItems.OrderByDescending(p => p.Score).ToList();
 
-                    while (topPoints.Count < topN && remainingPoints.Any())
+                    while (topItems.Count < topN && remainingItems.Any())
                     {
-                        var bestPoint = remainingPoints.First();
-                        topPoints.Add(bestPoint.Point);
+                        var bestItem = remainingItems.First();
 
-                        
-                        remainingPoints = remainingPoints.Where(p =>
-                            p.Point.Distance(bestPoint.Point) >= minDistance).ToList();
+                        // Convert the bestItem to WktModel
+                        var outputPoint = bestItem.Point.SRID == OutputSRID
+                            ? bestItem.Point
+                            : CoordinateConverter.ConvertPoint(bestItem.Point, OutputSRID);
+
+                        var resultModel = bestItem.OriginalModel;
+                        resultModel.Geometry = outputPoint;
+                        resultModel.Wkt = outputPoint.ToText();
+
+                        topItems.Add(resultModel);
+
+                        remainingItems = remainingItems.Where(p =>
+                            p.Point.Distance(bestItem.Point) >= minDistance).ToList();
                     }
 
-                    
-                    var results = ConvertResults(topPoints);
-                    
-
-                    return results;
+                    return topItems;
                 }
             }
             catch (Exception ex)
             {
-
                 throw new Exception($"{ex.Message}");
             }
         }
