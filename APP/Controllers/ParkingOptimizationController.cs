@@ -17,27 +17,25 @@ namespace SimplePointApplication.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly string _populationDataPath;
-        private readonly ILogger<ParkingOptimizationController> _logger;
         private const string DefaultPopulationFile = "tur_pop_2023_CN_100m_R2024B_v1.tif";
 
         public ParkingOptimizationController(
             IUnitOfWork unitOfWork,
-            IConfiguration config,
-            ILogger<ParkingOptimizationController> logger)
+            IConfiguration config)
+           
         {
             _unitOfWork = unitOfWork;
-            _logger = logger;
+            
             _populationDataPath = config["PopulationDataPath"] ?? DefaultPopulationFile;
 
             try
             {
                 ValidatePopulationDataFile();
-                _logger.LogInformation("Successfully initialized parking optimization controller");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Controller initialization failed");
-                throw;
+
+                throw new Exception($"{ex.Message}"); ;
             }
         }
 
@@ -58,16 +56,16 @@ namespace SimplePointApplication.Controllers
         {
             if (candidateSpots == null || candidateSpots.Count == 0)
             {
-                _logger.LogWarning("Empty or null candidate spots list received");
+
                 return BadRequest("At least one candidate spot must be provided");
             }
 
 
             try
             {
-                _logger.LogInformation("Starting optimization with {Count} candidate spots", candidateSpots.Count);
+               
 
-                using (var optimizer = new ParkingOptimizer(_populationDataPath, _logger))
+                using (var optimizer = new ParkingOptimizer(_populationDataPath))
                 {
                     var optimizedSpots = optimizer.OptimizeParkingSpots(
                         candidateSpots,
@@ -80,7 +78,7 @@ namespace SimplePointApplication.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Optimization failed");
+                
                 return StatusCode(500, new { Error = ex.Message });
             }
         }
