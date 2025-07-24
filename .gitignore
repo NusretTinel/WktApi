@@ -1,15 +1,126 @@
 appsettings.json
-# Build output
+# Visual Studio ve .NET ile ilgili dosyalar
 bin/
 obj/
-
-# User-specific files
-.vs/
-
-# Others
-*.user
 *.suo
-*.vsidx
+*.user
+*.userosscache
+*.sln.docstates
+*.csproj.user
+.vscode/
+.idea/
+*.swp
+*~
+*.ncb
+*.aps
+*.bak
 *.cache
-*.sqlite
-*.editorconfig
+*.ilk
+*.log
+*.pdb
+*.idb
+*.scc
+*.sdf
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vs/
+*.vspscc
+*.vssscc
+*.pidb
+*.svclog
+*.tlog
+*.exp
+*.lib
+*.sbr
+*.tlh
+*.tli
+*.manifest
+*.res
+*.obj
+*.nupkg
+*.snk
+*.dotCover
+*.DotSettings.user
+*.ghostdoc.xml
+
+# Derleme ve paketleme dosyaları
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa]rchive/
+[Pp]ublish/
+[Pp]ackages/
+*.nupkg
+*.snupkg
+*.zip
+*.7z
+*.rar
+*.tar.gz
+
+# NuGet paketleri
+packages/
+!packages/build/
+
+# Çözüm dosyaları (sln hariç tutulabilir, tercihe bağlı)
+# *.sln (gerekirse kaldırın)
+
+# Test sonuçları
+[Tt]est[Rr]esult*/
+[Cc]overage*/
+*.trx
+*.xml
+*.coverage
+*.coveragexml
+
+# ASP.NET ve ASP.NET Core dosyaları
+wwwroot/lib/
+wwwroot/bundles/
+wwwroot/dist/
+appsettings.json
+appsettings.*.json
+web.config
+*.publishproj
+*.pubxml
+*.pubxml.user
+*.azurePubxml
+
+# Geçici dosyalar
+*.tmp
+*.temp
+*.bak
+*.[Cc]ache
+*.cache
+*.log
+*.log.*
+*.log[0-9]*
+
+# IDE ve editör dosyaları
+.vscode/
+.idea/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+
+# MacOS dosyaları
+.DS_Store
+
+# Windows dosyaları
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Çevresel değişkenler ve hassas bilgiler
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Diğer
+node_modules/
+bower_components/
+*.lock
