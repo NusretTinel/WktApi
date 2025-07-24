@@ -8,6 +8,11 @@
     "Order": 0,
     "Parameters": [
       {
+        "Name": "candidateSpots",
+        "Type": "System.Collections.Generic.List\u00601[[SimplePointApplication.Entity.WktModel, APP, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      },
+      {
         "Name": "topN",
         "Type": "System.Int32",
         "IsRequired": false

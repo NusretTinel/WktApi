@@ -7,24 +7,16 @@
       "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:calculationmodule\\parkingoptimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\calculationmodule\\optimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:calculationmodule\\optimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\controllers\\parkingoptimizationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:controllers\\parkingoptimizationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\controllers\\trashbincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:controllers\\trashbincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\calculationmodule\\optimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:calculationmodule\\optimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\calculationmodule\\trashbinoptimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:calculationmodule\\trashbinoptimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\entity\\wktmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|solutionrelative:entity\\wktmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1EE2B440-575F-48FB-9B7D-24F0892D0FB1}|APP.csproj|c:\\users\\user\\source\\repos\\nusrettinel\\wktapi\\app\\calculationmodule\\kmeansoptimizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -38,24 +30,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ParkingOptimizationController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Controllers\\ParkingOptimizationController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ParkingOptimizationController.cs",
-              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Controllers\\ParkingOptimizationController.cs",
-              "RelativeToolTip": "Controllers\\ParkingOptimizationController.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAAAAAEMAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-23T10:38:45.822Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -65,66 +44,51 @@
               "RelativeDocumentMoniker": "CalculationModule\\ParkingOptimizer.cs",
               "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\CalculationModule\\ParkingOptimizer.cs",
               "RelativeToolTip": "CalculationModule\\ParkingOptimizer.cs",
-              "ViewState": "AgIAAL8AAAAAAAAAAAAqwNEAAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAACoAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-23T10:39:04.042Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "WktModel.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Entity\\WktModel.cs",
-              "RelativeDocumentMoniker": "Entity\\WktModel.cs",
-              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Entity\\WktModel.cs",
-              "RelativeToolTip": "Entity\\WktModel.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAAA0AAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-23T10:37:22.054Z",
+              "WhenOpened": "2025-07-23T15:17:37.619Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "ParkingOptimizationController.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Controllers\\ParkingOptimizationController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ParkingOptimizationController.cs",
+              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Controllers\\ParkingOptimizationController.cs",
+              "RelativeToolTip": "Controllers\\ParkingOptimizationController.cs",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAAAFAAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-23T10:38:45.822Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "TrashBinController.cs",
               "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Controllers\\TrashBinController.cs",
               "RelativeDocumentMoniker": "Controllers\\TrashBinController.cs",
               "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\Controllers\\TrashBinController.cs",
               "RelativeToolTip": "Controllers\\TrashBinController.cs",
-              "ViewState": "AgIAAEcAAAAAAAAAAAAmwFsAAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-23T06:53:55.766Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-23T06:53:55.766Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "TrashBinOptimizer.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\CalculationModule\\TrashBinOptimizer.cs",
-              "RelativeDocumentMoniker": "CalculationModule\\TrashBinOptimizer.cs",
-              "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\CalculationModule\\TrashBinOptimizer.cs",
-              "RelativeToolTip": "CalculationModule\\TrashBinOptimizer.cs",
-              "ViewState": "AgIAAHgAAAAAAAAAAAAqwIIAAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-17T08:15:16.503Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Optimizer.cs",
               "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\CalculationModule\\Optimizer.cs",
               "RelativeDocumentMoniker": "CalculationModule\\Optimizer.cs",
               "ToolTip": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\CalculationModule\\Optimizer.cs",
               "RelativeToolTip": "CalculationModule\\Optimizer.cs",
-              "ViewState": "AgIAACUAAAAAAAAAAAAqwC8AAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-17T08:15:16.174Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 4,
               "Title": "KMeansOptimizer.cs",
               "DocumentMoniker": "C:\\Users\\USER\\source\\repos\\NusretTinel\\WktApi\\APP\\CalculationModule\\KMeansOptimizer.cs",
               "RelativeDocumentMoniker": "CalculationModule\\KMeansOptimizer.cs",
