@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 
+
 namespace SimplePointApplication.Controllers
 {
     [ApiController]
@@ -18,25 +19,13 @@ namespace SimplePointApplication.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly string _populationDataPath;
         private const string DefaultPopulationFile = "tur_pop_2023_CN_100m_R2024B_v1.tif";
+        private const int MaxGridDimension = 2147483647;
 
-        public ParkingOptimizationController(
-            IUnitOfWork unitOfWork,
-            IConfiguration config)
-           
+        public ParkingOptimizationController(IUnitOfWork unitOfWork, IConfiguration config)
         {
             _unitOfWork = unitOfWork;
-            
             _populationDataPath = config["PopulationDataPath"] ?? DefaultPopulationFile;
-
-            try
-            {
-                ValidatePopulationDataFile();
-            }
-            catch (Exception ex)
-            {
-
-                throw new Exception($"{ex.Message}"); ;
-            }
+            ValidatePopulationDataFile();
         }
 
         private void ValidatePopulationDataFile()
@@ -49,22 +38,18 @@ namespace SimplePointApplication.Controllers
 
         [HttpPost("optimize")]
         public ActionResult<List<WktModel>> OptimizeParkingSpots(
-     [FromBody] List<WktModel> candidateSpots,
-     [FromQuery][Range(1, 1000)] int topN = 10,
-     [FromQuery][Range(0.000001, 10000)] double minDistance = 500,
-     [FromQuery][Range(0.000001, 10000)] double cellSize = 100)
+            [FromBody] List<WktModel> candidateSpots,
+            [FromQuery][Range(1, 1000)] int topN = 10,
+            [FromQuery][Range(0.000001, 10000)] double minDistance = 0.045,
+            [FromQuery][Range(0.000001, 10000)] double cellSize = 0.009)
         {
             if (candidateSpots == null || candidateSpots.Count == 0)
             {
-
                 return BadRequest("At least one candidate spot must be provided");
             }
 
-
             try
             {
-               
-
                 using (var optimizer = new ParkingOptimizer(_populationDataPath))
                 {
                     var optimizedSpots = optimizer.OptimizeParkingSpots(
@@ -78,7 +63,6 @@ namespace SimplePointApplication.Controllers
             }
             catch (Exception ex)
             {
-                
                 return StatusCode(500, new { Error = ex.Message });
             }
         }

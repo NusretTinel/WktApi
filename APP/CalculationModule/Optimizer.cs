@@ -14,6 +14,7 @@ namespace SimplePointApplication.Tools
 {
     public class Optimizer
     {
+        public const int MaxGridDimension = 2147483647;
         private interface IPopulationDataSource : IDisposable
         {
             double[,] GetPopulationDataForArea(int width, int height, Polygon bounds);
