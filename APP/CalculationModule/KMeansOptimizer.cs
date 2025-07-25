@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Point = NetTopologySuite.Geometries.Point;
 using Envelope = NetTopologySuite.Geometries.Envelope;
-using OpenCvSharp; // Add for GaussianBlur
+using OpenCvSharp; 
 
 namespace SimplePointApplication.Optimizers
 {
@@ -34,23 +34,22 @@ namespace SimplePointApplication.Optimizers
                     ? CreateDefaultPolygon(dataSource)
                     : (Polygon)new WKTReader().Read(polygonWkt);
 
-                // Calculate grid dimensions based on polygon bounds
+                
                 var envelope = polygon.EnvelopeInternal;
                 int gridWidth = (int)Math.Ceiling(envelope.Width / cellSize);
                 int gridHeight = (int)Math.Ceiling(envelope.Height / cellSize);
 
-                // Step 1: Get population data
+                
                 var population = dataSource.GetPopulationDataForArea(gridWidth, gridHeight, polygon);
 
-                // Step 2: Calculate difference map considering existing bins
+                
                 var difference = CalculateDifferenceMap(population, _existingBins, cellSize, envelope.MinX, envelope.MinY);
 
-                // Step 3: Convert to weighted points
+             
                 var weightedPoints = ConvertToWeightedPoints(difference, cellSize, envelope.MinX, envelope.MinY);
                 if (weightedPoints.Count == 0)
                     return new List<Point>();
 
-                // Step 4: Run K-means
                 var centroids = RunKMeans(weightedPoints, binCount, minDistance);
 
                 return centroids;
@@ -74,14 +73,14 @@ namespace SimplePointApplication.Optimizers
             using (var src = new Mat(input.GetLength(1), input.GetLength(0), MatType.CV_64FC1))
             using (var dst = new Mat())
             {
-                // Transpose the input to match OpenCV's row/column order
+                
                 for (int y = 0; y < src.Rows; y++)
                     for (int x = 0; x < src.Cols; x++)
                         src.Set(y, x, input[x, y]);
 
-                Cv2.GaussianBlur(src, dst, new OpenCvSharp.Size(kernelSize, kernelSize), sigma);
+                Cv2.GaussianBlur(src, dst, new Size(kernelSize, kernelSize), sigma);
 
-                // Transpose back to original order
+                
                 var output = new double[input.GetLength(0), input.GetLength(1)];
                 for (int y = 0; y < dst.Rows; y++)
                     for (int x = 0; x < dst.Cols; x++)
@@ -97,7 +96,7 @@ namespace SimplePointApplication.Optimizers
             int height = population.GetLength(1);
             var binHeatmap = new double[width, height];
 
-            // Mark existing bin locations
+            
             foreach (var bin in existingBins)
             {
                 int x = (int)((bin.X - minX) / cellSize);
@@ -108,10 +107,10 @@ namespace SimplePointApplication.Optimizers
                 }
             }
 
-            // Apply Gaussian blur to existing bins
+            
             binHeatmap = ApplyGaussianBlur(binHeatmap, 15, 3.0);
 
-            // Calculate difference between population and existing bins
+           
             var difference = new double[width, height];
             for (int x = 0; x < width; x++)
             {

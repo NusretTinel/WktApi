@@ -13,6 +13,7 @@ namespace SimplePointApplication.Controllers
     [ApiController]
     [Route("api/[controller]")]
     public class KMeansController : ControllerBase
+
     {
         private readonly string _populationDataPath = "tur_pop_2023_CN_100m_R2024B_v1.tif";
 
@@ -37,7 +38,7 @@ namespace SimplePointApplication.Controllers
                         minDistance,
                         polygonWkt);
 
-                    // Convert to WktModel
+                  
                     var results = optimizedPoints.Select(p => new WktModel
                     {
                         Geometry = p,
